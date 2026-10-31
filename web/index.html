@@ -1,0 +1,1363 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ISPN 2025 · Políticas nacionales</title>
+<meta name="description" content="Consulta interactiva del Informe Anual de Políticas Nacionales 2025: el Índice de Situación de la Política Nacional de las 42 políticas, sus criterios, indicadores, metas y reportes de cumplimiento.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,300..800;1,62..125,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Paleta institucional del ISPN */
+  --azul:#404B62; --azul-os:#2C3446; --azul-cl:#5B6680; --cian:#4DD0E1; --celeste:#D9EAF7; --gris:#F2F2F2;
+  --linea:#DADDE3; --linea-2:#ECEEF1; --tinta:#1D2330; --texto:#353C4A; --suave:#636B7A; --tenue:#949AA6;
+  --p1:#B01515; --p2:#B04A15; --p3:#B09A15; --p4:#91B015; --p5:#1DB015;
+  --baja:#B04A15; --media:#B09A15; --malta:#91B015; --alta:#1DB015; --nd:#A7AEBA;
+  --ancho:1260px; --lectura:68ch;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
+body{margin:0; background:#fff; color:var(--texto); font-family:Archivo,system-ui,sans-serif; font-size:16px;
+  line-height:1.6; font-variant-numeric:tabular-nums; font-stretch:100%}
+.env{max-width:var(--ancho); margin:0 auto; padding:0 28px}
+h1,h2,h3,h4{color:var(--tinta); margin:0; font-weight:700; font-stretch:82%; line-height:1.08; letter-spacing:-.012em}
+h1{font-size:clamp(2.2rem,5.2vw,4rem); letter-spacing:-.022em}
+h2{font-size:clamp(1.55rem,3vw,2.25rem)}
+h3{font-size:1.15rem; font-stretch:90%; letter-spacing:0}
+h4{font-size:1rem; font-stretch:95%; letter-spacing:0}
+p{margin:0 0 1em; max-width:var(--lectura)}
+a{color:var(--azul); text-underline-offset:3px}
+button,input,select{font-family:inherit}
+:focus-visible{outline:2px solid var(--cian); outline-offset:2px; border-radius:1px}
+svg{display:block; width:100%; height:auto; overflow:visible}
+svg text{font-family:Archivo,sans-serif}
+.eje{font-size:11.5px; fill:var(--suave); font-stretch:88%}
+.etq{font-size:12px; fill:var(--tinta)}
+.oculto{display:none!important}
+.sr{position:absolute!important; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+.mini{font-size:.84rem; color:var(--suave); font-stretch:92%}
+.cifra{font-weight:300; font-stretch:100%; letter-spacing:-.03em; line-height:.95; color:var(--tinta)}
+
+/* ------------------------------------------------------------------ cabecera */
+.cab{background:var(--azul); color:#fff; position:sticky; top:0; z-index:30}
+.cab-sup{display:flex; align-items:center; justify-content:space-between; gap:20px; padding-top:14px; padding-bottom:4px}
+.marca{display:flex; align-items:baseline; gap:12px; min-width:0}
+.marca b{font-size:1.25rem; font-weight:700; font-stretch:75%; letter-spacing:.01em; white-space:nowrap}
+.marca span{font-size:.86rem; color:#C8CEDA; font-stretch:90%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.buscador{position:relative; width:min(380px,100%)}
+.buscador input{width:100%; background:var(--azul-os); border:1px solid #5B6680; color:#fff; border-radius:2px;
+  padding:8px 34px 8px 11px; font-size:.9rem}
+.buscador input::placeholder{color:#AEB6C6}
+.buscador .ico{position:absolute; right:10px; top:50%; transform:translateY(-50%); width:15px; height:15px; pointer-events:none; opacity:.8}
+.opciones{position:absolute; left:0; right:0; top:calc(100% + 4px); background:#fff; color:var(--tinta); border:1px solid var(--linea);
+  box-shadow:0 10px 30px rgba(28,34,48,.18); max-height:380px; overflow:auto; z-index:40; border-radius:2px}
+.opciones [role=option]{display:grid; grid-template-columns:1fr auto; gap:10px; align-items:center; padding:8px 12px; cursor:pointer; border-bottom:1px solid var(--linea-2)}
+.opciones [role=option][aria-selected=true],.opciones [role=option]:hover{background:var(--celeste)}
+.opciones .s{font-weight:700; font-stretch:85%; font-size:.9rem}
+.opciones .t{display:block; font-size:.78rem; color:var(--suave); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.pestanas{display:flex; overflow-x:auto; scrollbar-width:none; gap:4px}
+.pestanas::-webkit-scrollbar{display:none}
+.pestanas button{flex:0 0 auto; background:none; border:0; color:#BFC6D4; font-size:.95rem; font-weight:600; font-stretch:88%;
+  padding:12px 14px 13px; cursor:pointer; border-bottom:3px solid transparent}
+.pestanas button:hover{color:#fff}
+.pestanas button[aria-selected=true]{color:#fff; border-bottom-color:var(--cian)}
+.pestanas .pol-act{margin-left:auto; color:#C8CEDA; font-size:.84rem; align-self:center; white-space:nowrap; font-stretch:88%; padding-right:2px}
+.pestanas .pol-act b{color:#fff}
+
+/* ------------------------------------------------------------------ estructura */
+.vista{animation:entra .25s ease}
+@keyframes entra{from{opacity:.4}to{opacity:1}}
+.franja{padding:56px 0}
+.franja.gris{background:var(--gris)}
+.franja + .franja:not(.gris){border-top:1px solid var(--linea-2)}
+.titular{max-width:860px; margin-bottom:28px}
+.titular .ante{font-size:.88rem; color:var(--suave); font-stretch:90%; margin-bottom:10px}
+.titular p{color:var(--suave); font-size:1.02rem; margin:12px 0 0}
+.rej{display:grid; gap:44px}
+.rej.c2{grid-template-columns:1fr 1fr}
+.rej.c3{grid-template-columns:repeat(3,1fr)}
+.rej.c21{grid-template-columns:1.6fr 1fr}
+@media (max-width:920px){.rej.c2,.rej.c3,.rej.c21{grid-template-columns:1fr}}
+.panel{background:#fff; border:1px solid var(--linea); border-radius:2px; padding:22px 22px 24px}
+.gris .panel{border-color:#E1E4E9}
+.tit-g{font-weight:700; font-stretch:90%; color:var(--tinta); font-size:1.02rem; margin-bottom:2px}
+.sub-g{font-size:.86rem; color:var(--suave); margin-bottom:16px; max-width:62ch}
+.leyenda{display:flex; flex-wrap:wrap; gap:6px 18px; font-size:.82rem; color:var(--suave); margin-top:12px; font-stretch:92%}
+.leyenda i{display:inline-block; width:10px; height:10px; margin-right:6px; vertical-align:0; border-radius:1px}
+.leyenda i.o{border-radius:50%}
+.nota-lectura{border-top:2px solid var(--azul); margin-top:18px; padding-top:12px; font-size:.92rem; color:var(--texto); max-width:72ch}
+.nota-lectura p{margin:0 0 .5em}
+.nota-lectura b{color:var(--tinta)}
+.desliza{overflow-x:auto; -webkit-overflow-scrolling:touch}
+@media (max-width:760px){.desliza.movil > svg{min-width:760px} .desliza.movil::before{content:"Desliza para ver el gráfico completo"; display:block; font-size:.76rem; color:var(--suave); margin-bottom:6px}}
+
+/* ------------------------------------------------------------------ controles */
+.controles{display:flex; flex-wrap:wrap; gap:14px 24px; align-items:flex-end; margin-bottom:18px}
+.campo{display:flex; flex-direction:column; gap:6px; min-width:0}
+.campo > label,.campo > .lbl{font-size:.8rem; color:var(--suave); font-weight:600; font-stretch:90%}
+select,input[type=search]{font-size:.9rem; padding:8px 10px; background:#fff; border:1px solid #C3C8D1; border-radius:2px; color:var(--tinta); min-width:180px; max-width:100%}
+.seg{display:inline-flex; flex-wrap:wrap; border:1px solid #C3C8D1; border-radius:2px; overflow:hidden; background:#fff}
+.seg button{border:0; background:#fff; color:var(--suave); font-size:.86rem; padding:8px 12px; cursor:pointer; border-right:1px solid #E2E5EA; font-stretch:92%}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed=true]{background:var(--azul); color:#fff}
+.boton{display:inline-flex; align-items:center; gap:8px; background:var(--azul); color:#fff; border:1px solid var(--azul); border-radius:2px;
+  padding:9px 14px; font-size:.88rem; font-weight:600; cursor:pointer; font-stretch:92%}
+.boton.sec{background:#fff; color:var(--azul)}
+.boton:hover{background:var(--azul-os); color:#fff}
+.enlace{background:none; border:0; color:var(--azul); text-decoration:underline; text-underline-offset:3px; cursor:pointer; font-size:.86rem; padding:8px 0}
+.contador{font-size:.88rem; color:var(--suave); margin:0 0 12px}
+.contador b{color:var(--tinta)}
+
+/* ------------------------------------------------------------------ panorama */
+.hero{padding:56px 0 28px}
+.hero h1{max-width:17ch}
+.hero .lede{font-size:clamp(1.05rem,1.6vw,1.22rem); color:var(--texto); max-width:58ch; margin-top:20px; line-height:1.55}
+.escala-cont{margin-top:34px}
+.cifras{display:grid; grid-template-columns:repeat(5,1fr); border-top:1px solid var(--linea); border-bottom:1px solid var(--linea); margin-top:30px}
+.cifras > div{padding:18px 18px 20px 0}
+.cifras > div + div{border-left:1px solid var(--linea); padding-left:18px}
+.cifras .cifra{font-size:clamp(2rem,3.6vw,3rem)}
+.cifras .n{font-size:.86rem; color:var(--suave); margin-top:8px; max-width:22ch; line-height:1.35; font-stretch:92%}
+@media (max-width:920px){.cifras{grid-template-columns:repeat(2,1fr)} .cifras > div:nth-child(odd){border-left:0; padding-left:0} .cifras > div{border-top:1px solid var(--linea-2)}}
+.lecturas{display:grid; grid-template-columns:repeat(3,1fr); gap:0}
+.lecturas > article{padding:4px 28px 0 0}
+.lecturas > article + article{border-left:1px solid var(--linea); padding-left:28px}
+.lecturas .cifra{font-size:3.4rem; margin-bottom:14px}
+.lecturas .cifra small{font-size:1.2rem; font-weight:400; color:var(--suave); letter-spacing:0}
+.lecturas p{font-size:.95rem; color:var(--suave); margin:8px 0 0}
+@media (max-width:920px){.lecturas{grid-template-columns:1fr; gap:28px} .lecturas > article + article{border-left:0; padding-left:0; border-top:1px solid var(--linea); padding-top:24px}}
+.termo{display:grid; grid-template-columns:150px 1fr; gap:0 26px}
+.termo .dim{grid-column:1; font-size:.86rem; font-weight:700; font-stretch:88%; color:var(--azul); padding-top:14px; border-top:2px solid var(--azul)}
+.termo .filas{grid-column:2; border-top:1px solid var(--linea)}
+.fila-c{display:grid; grid-template-columns:minmax(170px,1.1fr) 2fr 70px; gap:16px; align-items:center; padding:12px 0; border-bottom:1px solid var(--linea-2)}
+.fila-c .nm{font-size:.93rem; color:var(--tinta)}
+.fila-c .vl{text-align:right; font-size:.9rem; color:var(--suave)}
+.fila-c .vl b{font-size:1.15rem; font-weight:400; color:var(--tinta)}
+@media (max-width:760px){.termo{grid-template-columns:1fr} .termo .dim,.termo .filas{grid-column:1} .fila-c{grid-template-columns:1fr 60px} .fila-c .ap{grid-column:1/-1; grid-row:2}}
+.apilada{display:flex; height:14px; background:var(--linea-2)}
+.apilada span{display:block; height:100%}
+.cuadrantes{display:grid; grid-template-columns:auto 1fr 1fr; grid-template-rows:auto 1fr 1fr; gap:6px; max-width:720px}
+.cuadrantes .eh{font-size:.82rem; color:var(--suave); font-weight:600; font-stretch:88%; align-self:end; padding-bottom:4px}
+.cuadrantes .ev{font-size:.82rem; color:var(--suave); font-weight:600; font-stretch:88%; writing-mode:vertical-rl; transform:rotate(180deg); text-align:center; padding-right:6px}
+.cuadro{padding:18px 18px 16px; min-height:150px; display:flex; flex-direction:column; justify-content:space-between}
+.cuadro .cifra{font-size:2.8rem}
+.cuadro p{font-size:.88rem; margin:6px 0 0; line-height:1.4}
+.cuadro .pc{font-size:.84rem; opacity:.85}
+
+/* ------------------------------------------------------------------ análisis */
+.punto{cursor:pointer}
+.punto:hover,.punto:focus{stroke:var(--tinta); stroke-width:2}
+.matriz{border-collapse:collapse; width:100%; font-size:.86rem; min-width:780px}
+.matriz th{background:var(--azul); color:#fff; font-weight:600; font-stretch:88%; padding:9px 6px; text-align:center; cursor:pointer; user-select:none; white-space:nowrap; position:sticky; top:0}
+.matriz th:first-child{text-align:left; padding-left:12px}
+.matriz th .fl{opacity:.4; margin-left:4px; font-size:.7rem}
+.matriz th[aria-sort] .fl{opacity:1}
+.matriz td{padding:0; border-bottom:2px solid #fff; border-right:2px solid #fff}
+.matriz td:first-child{padding:6px 12px; background:var(--gris); cursor:pointer}
+.matriz tr:hover td:first-child{background:var(--celeste)}
+.matriz .sg{font-weight:700; font-stretch:85%}
+.matriz .nm{display:block; font-size:.76rem; color:var(--suave); max-width:340px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.celda{display:block; text-align:center; color:#fff; font-weight:600; padding:9px 4px; min-width:46px}
+
+/* ------------------------------------------------------------------ ficha */
+.ficha-cab{display:grid; grid-template-columns:1fr auto; gap:28px; align-items:end; padding:48px 0 26px}
+@media (max-width:760px){.ficha-cab{grid-template-columns:1fr}}
+.ficha-cab .ante{font-size:.9rem; color:var(--suave); margin-bottom:10px; font-stretch:90%}
+.ficha-cab h1{font-size:clamp(1.8rem,3.6vw,2.8rem); max-width:24ch}
+.medallon{min-width:190px; padding:16px 20px 14px; color:#fff; border-radius:2px}
+.medallon .cifra{color:#fff; font-size:4rem}
+.medallon .c{font-size:.86rem; margin-top:6px; opacity:.95}
+.datos{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:16px 28px; padding:18px 0; border-top:1px solid var(--linea); border-bottom:1px solid var(--linea)}
+.datos div{font-size:.82rem; color:var(--suave); font-stretch:92%}
+.datos b{display:block; font-size:.98rem; color:var(--tinta); font-weight:600; font-stretch:95%}
+.acciones{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px}
+.texto-sit{font-size:1.05rem; line-height:1.65; color:var(--texto); max-width:70ch}
+details.pleg{border-top:1px solid var(--linea); padding:12px 0 0; margin-top:14px; max-width:70ch}
+details.pleg summary{cursor:pointer; font-weight:600; font-stretch:92%; color:var(--tinta)}
+details.pleg p{margin-top:10px; font-size:.95rem}
+.perfil .fila{display:grid; grid-template-columns:34px minmax(150px,1fr) 190px 54px 18px; gap:12px; align-items:center; padding:12px 0; border-bottom:1px solid var(--linea-2); width:100%;
+  background:none; border-left:0; border-right:0; border-top:0; text-align:left; cursor:pointer; color:var(--texto); font-size:.95rem}
+.perfil .fila:hover{background:#FAFBFC}
+.perfil .cod{font-weight:700; font-stretch:80%; color:var(--suave); font-size:.85rem}
+.perfil .nm b{display:block; color:var(--tinta); font-weight:600; font-stretch:95%}
+.perfil .nm span{font-size:.82rem; color:var(--suave)}
+.perfil .vl{text-align:right; font-size:1.1rem; color:var(--tinta)}
+.perfil .vl small{font-size:.75rem; color:var(--suave)}
+.perfil .chev{color:var(--tenue); transition:transform .15s}
+.perfil [aria-expanded=true] .chev{transform:rotate(90deg)}
+.perfil .com{padding:6px 0 16px 46px; font-size:.93rem; color:var(--texto); max-width:80ch; border-bottom:1px solid var(--linea-2)}
+@media (max-width:640px){.perfil .fila{grid-template-columns:30px 1fr 54px 14px} .perfil .esc-svg{grid-column:2/4; grid-row:2} .perfil .com{padding-left:0}}
+.simu{background:var(--azul); color:#fff; border-radius:2px; padding:22px 22px 20px}
+.simu h3{color:#fff}
+.simu .mini{color:#C8CEDA}
+.simu-fila{display:grid; grid-template-columns:1fr auto; gap:10px; align-items:center; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.12); font-size:.9rem}
+.paso{display:inline-flex; align-items:center; border:1px solid #6A7590; border-radius:2px}
+.paso button{background:none; border:0; color:#fff; width:30px; height:28px; cursor:pointer; font-size:1rem}
+.paso button:disabled{opacity:.3; cursor:default}
+.paso span{min-width:42px; text-align:center; font-weight:600}
+.paso span.cambio{color:var(--cian)}
+.simu .res{display:flex; align-items:baseline; gap:12px; margin:16px 0 4px}
+.simu .res .cifra{color:#fff; font-size:3rem}
+.simu .franja-txt{font-size:.92rem; color:#E3E7EE}
+.mapa-op{border-top:2px solid var(--azul); margin-top:6px}
+.mapa-op > button{display:grid; grid-template-columns:1fr auto 18px; gap:12px; width:100%; background:none; border:0; text-align:left; cursor:pointer; padding:14px 0; color:var(--tinta)}
+.mapa-op > button b{font-stretch:85%; font-weight:700}
+.mapa-op > button span.n{font-size:.95rem}
+.mapa-op .res-op{font-size:.82rem; color:var(--suave); white-space:nowrap}
+.mapa-op .chev{color:var(--tenue); transition:transform .15s}
+.mapa-op > button[aria-expanded=true] .chev{transform:rotate(90deg)}
+.serv{margin:2px 0 14px; padding-left:16px; border-left:2px solid var(--linea)}
+.serv .sv-tit{font-size:.88rem; color:var(--tinta); font-weight:600; font-stretch:92%; margin:10px 0 2px}
+.serv .sv-tit span{color:var(--suave); font-weight:400}
+.ind-fila{display:grid; grid-template-columns:118px 1fr 104px 72px 92px; gap:12px; align-items:center; padding:7px 0; border-bottom:1px dashed var(--linea-2); font-size:.86rem}
+.ind-fila .cd{font-weight:700; font-stretch:78%; color:var(--suave); font-size:.8rem}
+.ind-fila .vl{text-align:right; color:var(--tinta)}
+.ind-fila .vl small{display:block; font-size:.72rem; color:var(--suave)}
+.ind-fila button{background:none; border:0; padding:0; text-align:left; cursor:pointer; color:var(--texto); font:inherit}
+.ind-fila button:hover{color:var(--azul); text-decoration:underline}
+@media (max-width:760px){.ind-fila{grid-template-columns:92px 1fr 84px} .ind-fila .vl,.ind-fila .marcas{display:none}}
+.marcas{display:flex; gap:10px; justify-content:flex-end; font-size:.78rem; white-space:nowrap}
+.m-mej{display:inline-flex; align-items:center; gap:4px}
+.atencion{border-left:3px solid var(--p1); padding:4px 0 4px 16px}
+.atencion li{margin-bottom:6px; font-size:.9rem}
+.lista-s{margin:6px 0 0; padding-left:18px; font-size:.92rem}
+.lista-s li{margin-bottom:5px}
+
+/* ------------------------------------------------------------------ indicadores */
+.tabla-ind{border-collapse:collapse; width:100%; font-size:.87rem; min-width:960px}
+.tabla-ind th{text-align:left; font-size:.78rem; font-weight:600; font-stretch:88%; color:var(--suave); padding:10px 8px; border-bottom:2px solid var(--azul); white-space:nowrap; vertical-align:bottom}
+.tabla-ind th.num,.tabla-ind td.num{text-align:right}
+.tabla-ind td{padding:10px 8px; border-bottom:1px solid var(--linea-2); vertical-align:middle}
+.tabla-ind tr.fi{cursor:pointer}
+.tabla-ind tr.fi:hover td{background:#F7F9FB}
+.tabla-ind tr.ab td{background:var(--celeste)}
+.tabla-ind .cd{font-weight:700; font-stretch:78%; white-space:nowrap; font-size:.82rem; color:var(--tinta)}
+.tabla-ind .pl{display:block; font-size:.74rem; color:var(--suave); font-weight:400}
+.tabla-ind .nm{max-width:420px}
+.barra-meta{display:flex; align-items:center; gap:8px; white-space:nowrap}
+.barra-meta i{display:block; width:64px; height:7px; background:var(--linea-2); position:relative}
+.barra-meta i b{position:absolute; left:0; top:0; bottom:0}
+.det td{background:#FAFBFC!important; padding:16px 18px 20px!important}
+.det-grid{display:grid; grid-template-columns:1.2fr 1fr; gap:24px}
+@media (max-width:760px){.det-grid{grid-template-columns:1fr}}
+.meta-i{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 18px; font-size:.84rem; color:var(--suave)}
+.meta-i b{color:var(--tinta); font-weight:600; display:block}
+.comentario{font-size:.9rem; color:var(--texto); border-left:3px solid var(--azul); padding:2px 0 2px 12px; margin-top:12px}
+.aviso{font-size:.82rem; background:#FFF6DC; border-left:3px solid var(--p3); padding:8px 12px; margin-top:12px; color:#5A4A12}
+.serie{border-collapse:collapse; font-size:.82rem; margin-top:12px; width:100%; min-width:480px}
+.serie th{font-weight:600; color:var(--suave); padding:5px 8px; text-align:right; border-bottom:1px solid var(--linea)}
+.serie th:first-child,.serie td:first-child{text-align:left}
+.serie td{padding:5px 8px; text-align:right; border-bottom:1px solid var(--linea-2)}
+.mas{display:flex; justify-content:center; padding:16px}
+.resumen-ind{display:grid; grid-template-columns:repeat(4,1fr); gap:0; border-top:1px solid var(--linea); border-bottom:1px solid var(--linea); margin-bottom:18px}
+.resumen-ind > div{padding:14px 16px 14px 0}
+.resumen-ind > div + div{border-left:1px solid var(--linea); padding-left:16px}
+.resumen-ind .cifra{font-size:2rem}
+.resumen-ind .n{font-size:.82rem; color:var(--suave); margin-top:4px}
+@media (max-width:760px){.resumen-ind{grid-template-columns:repeat(2,1fr)} .resumen-ind > div:nth-child(3){border-left:0; padding-left:0}}
+
+/* ------------------------------------------------------------------ reportes */
+.lector{display:grid; grid-template-columns:230px minmax(0,1fr); gap:40px; align-items:start}
+@media (max-width:920px){.lector{grid-template-columns:1fr} .indice{position:static!important}}
+.indice{position:sticky; top:124px; font-size:.88rem}
+.indice a{display:block; padding:7px 0 7px 12px; border-left:2px solid var(--linea); color:var(--suave); text-decoration:none; line-height:1.35}
+.indice a:hover{color:var(--tinta); border-left-color:var(--azul)}
+.indice a small{display:block; font-size:.76rem; color:var(--tenue)}
+.texto-rc{max-width:72ch}
+.texto-rc section{padding-bottom:30px; margin-bottom:30px; border-bottom:1px solid var(--linea)}
+.texto-rc h2{font-size:1.5rem; margin-bottom:6px}
+.texto-rc .op-nom{color:var(--suave); margin-bottom:18px; font-size:.98rem}
+.texto-rc h3{font-size:1.05rem; color:var(--azul); margin:22px 0 10px}
+.texto-rc h4{font-size:.98rem; margin:18px 0 8px; color:var(--tinta)}
+.texto-rc p{font-size:1rem; line-height:1.7; color:var(--texto)}
+.texto-rc ul{margin:0 0 1em; padding-left:20px}
+.texto-rc li{margin-bottom:6px; line-height:1.6}
+.hueco{display:grid; grid-template-columns:28px 1fr; gap:12px; border:1px dashed #B9C0CB; background:var(--gris); padding:12px 14px; margin:6px 0 16px; border-radius:2px; font-size:.88rem; color:var(--suave)}
+.hueco b{color:var(--tinta); font-weight:600; display:block}
+.hueco .src{font-size:.8rem; margin-top:4px}
+.hueco .enlace{padding:4px 0 0}
+.notas{font-size:.84rem; color:var(--suave); border-top:1px solid var(--linea); padding-top:10px; margin-top:16px}
+.notas p{font-size:.84rem; margin:0 0 .4em; line-height:1.5}
+.recorte{position:relative; max-height:520px; overflow:hidden}
+.recorte::after{content:""; position:absolute; left:0; right:0; bottom:0; height:120px; background:linear-gradient(rgba(255,255,255,0),#fff)}
+mark{background:#FFE98A; color:inherit; padding:0 1px}
+.cargando{color:var(--suave); padding:24px 0}
+
+/* ------------------------------------------------------------------ metodología */
+.formula{font-size:1.1rem; background:var(--celeste); padding:14px 16px; margin:8px 0 16px; display:inline-block; font-stretch:95%}
+.rubrica{border-collapse:collapse; width:100%; font-size:.86rem; min-width:640px}
+.rubrica th{font-weight:600; font-stretch:88%; color:var(--suave); padding:8px; text-align:left; border-bottom:2px solid var(--azul)}
+.rubrica td{padding:8px; border-bottom:1px solid var(--linea-2); vertical-align:top}
+.pild{display:inline-block; min-width:30px; text-align:center; color:#fff; font-weight:600; font-size:.82rem; padding:2px 6px; border-radius:2px}
+.lista-m{margin:0; padding-left:18px}
+.lista-m li{margin-bottom:8px; font-size:.95rem}
+
+footer{background:var(--azul-os); color:#C8CEDA; font-size:.86rem; padding:32px 0 40px}
+footer p{max-width:92ch}
+footer b{color:#fff}
+.pista{position:fixed; pointer-events:none; background:var(--azul-os); color:#fff; font-size:.82rem; padding:9px 11px; border-radius:2px;
+  opacity:0; transition:opacity .1s; max-width:300px; z-index:60; line-height:1.4; box-shadow:0 6px 18px rgba(0,0,0,.2)}
+.pista b{font-weight:600}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important; scroll-behavior:auto!important}}
+@media (max-width:640px){
+  .env{padding:0 16px} .cab{position:static} .cab-sup{flex-wrap:wrap} .buscador{width:100%} .marca span{display:none}
+  .pestanas .pol-act{display:none} .indice{top:0} .franja{padding:40px 0} .hero{padding-top:36px}
+}
+</style>
+</head>
+<body>
+
+<header class="cab">
+  <div class="env cab-sup">
+    <div class="marca"><b>ISPN 2025</b><span>Situación de las políticas nacionales del Perú</span></div>
+    <div class="buscador">
+      <label class="sr" for="busca">Buscar una política nacional</label>
+      <input id="busca" type="text" role="combobox" aria-expanded="false" aria-controls="opciones" aria-autocomplete="list"
+        autocomplete="off" placeholder="Buscar política por nombre, sigla o entidad">
+      <svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><circle cx="6.5" cy="6.5" r="5" fill="none" stroke="#fff" stroke-width="1.6"/><path d="M10.5 10.5 15 15" stroke="#fff" stroke-width="1.6"/></svg>
+      <div class="opciones oculto" id="opciones" role="listbox" aria-label="Políticas nacionales"></div>
+    </div>
+  </div>
+  <div class="env">
+    <nav class="pestanas" role="tablist" aria-label="Secciones" id="pestanas">
+      <button role="tab" data-v="panorama">Panorama</button>
+      <button role="tab" data-v="analisis">Análisis</button>
+      <button role="tab" data-v="ficha">Ficha por política</button>
+      <button role="tab" data-v="indicadores">Indicadores</button>
+      <button role="tab" data-v="reportes">Reportes de cumplimiento</button>
+      <button role="tab" data-v="metodologia">Metodología</button>
+      <span class="pol-act" id="polAct"></span>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ============================================================ PANORAMA -->
+<div class="vista" id="v-panorama" role="tabpanel">
+  <section class="hero">
+    <div class="env">
+      <p class="mini">Informe Anual de Políticas Nacionales · resultados al cierre de 2025</p>
+      <h1 style="margin-top:14px">Ninguna de las 42 políticas nacionales alcanza una situación alta</h1>
+      <p class="lede" id="lede"></p>
+      <div class="escala-cont desliza movil"><svg id="gEscala" viewBox="0 0 1200 250" role="img" aria-label="Las 42 políticas ubicadas en la escala del índice de 0 a 100"></svg></div>
+      <p class="mini" style="margin-top:6px">Cada punto es una política. Pasa el cursor para identificarla o haz clic para abrir su ficha.</p>
+      <div class="cifras" id="cifras"></div>
+    </div>
+  </section>
+
+  <section class="franja gris">
+    <div class="env">
+      <div class="titular"><h2>Tres lecturas del informe</h2></div>
+      <div class="lecturas">
+        <article>
+          <div class="cifra" style="color:var(--p1)">40 <small>de 42</small></div>
+          <h3>El problema público no muestra una mejora acreditable</h3>
+          <p>En casi todas las políticas el problema no mejoró, empeoró o el reporte no permitió saber cómo evolucionó. Es el criterio con el promedio más bajo de los seis.</p>
+        </article>
+        <article>
+          <div class="cifra" style="color:var(--p3)">15 <small>de 26</small></div>
+          <h3>Implementar servicios no garantiza resultados</h3>
+          <p>De las políticas que tienen la mayoría o la totalidad de sus servicios en marcha, solo 15 muestran resultados favorables en al menos la mitad de los indicadores de esos servicios.</p>
+        </article>
+        <article>
+          <div class="cifra" style="color:var(--p4)">9 <small>de 42</small></div>
+          <h3>Pocas proponen cómo mejorar</h3>
+          <p>Aunque tres de cada cuatro tienen información suficiente para su seguimiento, solo nueve plantean alternativas específicas, viables y con acciones claras.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="franja">
+    <div class="env">
+      <div class="titular">
+        <h2>Los resultados son el eslabón más débil</h2>
+        <p>Distribución de los puntajes de las 42 políticas en cada criterio. La implementación avanza; los resultados y las propuestas de mejora, no.</p>
+      </div>
+      <div id="termo"></div>
+      <div class="leyenda" id="leyPunt"></div>
+    </div>
+  </section>
+
+  <section class="franja gris">
+    <div class="env">
+      <div class="rej c21">
+        <div>
+          <div class="titular" style="margin-bottom:22px">
+            <h2>Mejorar no es lo mismo que llegar a la meta</h2>
+            <p>El índice valora si un indicador mejoró frente al año anterior. Pero cada indicador tiene también una meta para 2025. Al cruzar ambas preguntas aparecen dos zonas grises que el puntaje no muestra.</p>
+          </div>
+          <div class="cuadrantes" id="cuadrantes"></div>
+        </div>
+        <div style="align-self:end">
+          <div class="nota-lectura" id="lecturaCruce"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================ ANÁLISIS -->
+<div class="vista oculto" id="v-analisis" role="tabpanel">
+  <section class="franja">
+    <div class="env">
+      <div class="titular">
+        <p class="ante">Más allá del puntaje</p>
+        <h2>¿Qué acompaña a una política mejor evaluada?</h2>
+        <p>Variables que no forman parte del cálculo del índice. Si una variable fuera un componente del índice, su relación con el puntaje sería aritmética y no diría nada nuevo; por eso no se incluyen.</p>
+      </div>
+      <div class="controles">
+        <div class="campo"><label for="selX">Comparar el índice con</label>
+          <select id="selX">
+            <option value="anios">Años de vigencia de la política</option>
+            <option value="pct_meta">Indicadores que alcanzaron su meta 2025 (%)</option>
+            <option value="ips">Indicadores por servicio</option>
+            <option value="n_serv">Número de servicios</option>
+          </select></div>
+        <div class="campo"><span class="lbl" id="lColor">Color de los puntos</span>
+          <div class="seg" role="group" aria-labelledby="lColor" id="segColor"></div></div>
+        <div class="campo"><span class="lbl" id="lEtq">Etiquetas</span>
+          <div class="seg" role="group" aria-labelledby="lEtq" id="segEtq"></div></div>
+      </div>
+      <div class="desliza movil"><svg id="gExplora" viewBox="0 0 1200 700" role="img" aria-label="Dispersión del índice frente a la variable elegida"></svg></div>
+      <div class="leyenda" id="leyExplora"></div>
+      <div class="nota-lectura" id="lecturaExplora"></div>
+    </div>
+  </section>
+
+  <section class="franja gris">
+    <div class="env">
+      <div class="titular">
+        <h2>Lo que el índice premia y lo que la política se propuso</h2>
+        <p>Para cada política: qué parte de sus indicadores mejoró frente al año anterior y qué parte alcanzó su meta 2025. Cuando la distancia es grande, el puntaje y el cumplimiento de metas cuentan historias distintas.</p>
+      </div>
+      <div class="controles">
+        <div class="campo"><span class="lbl" id="lOrden">Ordenar por</span>
+          <div class="seg" role="group" aria-labelledby="lOrden" id="segOrdenM"></div></div>
+      </div>
+      <div class="panel"><svg id="gMancuerna" role="img" aria-label="Por política, porcentaje de indicadores que mejoran y que alcanzan su meta"></svg>
+        <div class="leyenda"><span><i class="o" style="background:var(--azul)"></i>Mejoró frente al año anterior</span><span><i class="o" style="background:#fff; border:2px solid var(--p5)"></i>Alcanzó su meta 2025</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="franja">
+    <div class="env">
+      <div class="rej c2">
+        <div>
+          <div class="tit-g">Entregar servicios frente a lograr resultados</div>
+          <p class="sub-g">Servicios en marcha (horizontal) y servicios cuyos indicadores mejoraron (vertical). El cuadrante inferior derecho reúne a las políticas que implementan sin mostrar efectos todavía.</p>
+          <svg id="gCuadrante" viewBox="0 0 560 470" role="img" aria-label="Servicios implementados frente a indicadores de servicio favorables"></svg>
+          <div class="nota-lectura" id="lecturaCuadrante"></div>
+        </div>
+        <div>
+          <div class="tit-g">Qué atributos de los servicios rinden menos</div>
+          <p class="sub-g">Indicadores de servicio agrupados según el estándar de cumplimiento que miden.</p>
+          <svg id="gEstandar" viewBox="0 0 560 320" role="img" aria-label="Resultados de los indicadores de servicio según el estándar"></svg>
+          <div class="leyenda"><span><i class="o" style="background:var(--azul)"></i>Mejoraron frente al año anterior</span><span><i class="o" style="background:#fff; border:2px solid var(--p5)"></i>Alcanzaron su meta</span></div>
+          <div class="nota-lectura" id="lecturaEstandar"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="franja gris">
+    <div class="env">
+      <div class="rej c2">
+        <div>
+          <div class="tit-g">La autovaloración de las rectorías</div>
+          <p class="sub-g">Nivel de implementación que cada entidad declaró en su reporte, frente al puntaje obtenido.</p>
+          <svg id="gNivel" viewBox="0 0 560 330" role="img" aria-label="Índice según el nivel de implementación reportado"></svg>
+          <div class="nota-lectura" id="lecturaNivel"></div>
+        </div>
+        <div>
+          <div class="tit-g">Matriz de puntajes</div>
+          <p class="sub-g">Los seis criterios y el índice con la escala oficial. Ordena por cualquier columna o abre una política.</p>
+          <div class="desliza" style="max-height:560px; overflow:auto"><table class="matriz" id="matriz"></table></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================ FICHA -->
+<div class="vista oculto" id="v-ficha" role="tabpanel"><div id="ficha"></div></div>
+
+<!-- ============================================================ INDICADORES -->
+<div class="vista oculto" id="v-indicadores" role="tabpanel">
+  <section class="franja">
+    <div class="env">
+      <div class="titular">
+        <p class="ante" id="antInd"></p>
+        <h2>Indicadores de seguimiento</h2>
+        <p>Valores observados, metas y resultado de cada indicador de objetivo prioritario y de servicio. Abre una fila para ver la serie 2019–2025 y el comentario que registró la entidad.</p>
+      </div>
+      <div class="controles">
+        <div class="campo"><span class="lbl" id="lAlc">Alcance</span>
+          <div class="seg" role="group" aria-labelledby="lAlc" id="segAlc"></div></div>
+        <div class="campo" id="campoOP"><label for="selOP">Objetivo prioritario</label><select id="selOP"></select></div>
+        <div class="campo"><span class="lbl" id="lTipo">Tipo</span>
+          <div class="seg" role="group" aria-labelledby="lTipo" id="segTipo"></div></div>
+        <div class="campo"><span class="lbl" id="lMej">Frente al año anterior</span>
+          <div class="seg" role="group" aria-labelledby="lMej" id="segMej"></div></div>
+        <div class="campo"><span class="lbl" id="lMeta">Meta 2025</span>
+          <div class="seg" role="group" aria-labelledby="lMeta" id="segMeta"></div></div>
+        <div class="campo"><label for="selEst">Estándar del servicio</label><select id="selEst"></select></div>
+        <div class="campo"><label for="buscaInd">Buscar</label><input type="search" id="buscaInd" placeholder="nombre o código"></div>
+        <button class="enlace" type="button" id="limpiaInd">Quitar filtros</button>
+      </div>
+      <div class="resumen-ind" id="resumenInd"></div>
+      <p class="contador" id="contInd"></p>
+      <div class="desliza"><table class="tabla-ind" id="tablaInd"></table></div>
+      <div class="mas"><button class="boton sec oculto" type="button" id="masInd"></button></div>
+      <div class="acciones"><button class="boton sec" type="button" id="csvInd">Descargar los indicadores filtrados (CSV)</button></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================ REPORTES -->
+<div class="vista oculto" id="v-reportes" role="tabpanel">
+  <section class="franja">
+    <div class="env">
+      <div class="titular" id="cabRC"></div>
+      <div class="controles">
+        <div class="campo"><label for="buscaRC">Buscar en el reporte</label><input type="search" id="buscaRC" placeholder="palabra o frase"></div>
+        <span class="mini" id="contRC"></span>
+      </div>
+      <div class="lector">
+        <nav class="indice" id="indiceRC" aria-label="Secciones del reporte"></nav>
+        <div class="texto-rc" id="cuerpoRC"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================ METODOLOGÍA -->
+<div class="vista oculto" id="v-metodologia" role="tabpanel">
+  <section class="franja">
+    <div class="env">
+      <div class="rej c2">
+        <div>
+          <h2>Cómo se calcula el índice</h2>
+          <p style="margin-top:14px">El Índice de Situación de la Política Nacional valora cada política con seis criterios, a partir de su reporte de cumplimiento y de los indicadores registrados en su reporte de seguimiento. Los criterios 1 a 5 se califican de 1 a 5; las alternativas de mejora, de 1 a 3.</p>
+          <div class="formula">ISPN = 100 × promedio de (puntaje − 1) ÷ (máximo − 1)</div>
+          <p>Por eso, cada escalón en los criterios 1 a 5 vale 4.2 puntos del índice, y cada escalón en alternativas de mejora vale 8.3.</p>
+          <div id="franjasMet"></div>
+        </div>
+        <div><h2>Tres dimensiones, seis criterios</h2><div id="dimMet" style="margin-top:14px"></div></div>
+      </div>
+    </div>
+  </section>
+  <section class="franja gris">
+    <div class="env">
+      <h2>Rúbricas de los criterios cuantitativos</h2>
+      <div class="desliza" style="margin-top:18px"><table class="rubrica" id="tablaRub"></table></div>
+      <p class="mini" style="margin-top:14px">Un indicador es favorable cuando su valor 2025 mejora en el sentido esperado frente al año anterior o, a falta de este, frente a la línea de base. Los indicadores sin dato se excluyen de los criterios 2 y 4 y se valoran únicamente en el criterio 5, para no castigar dos veces la misma falta de información. Los indicadores complementarios no se consideran.</p>
+    </div>
+  </section>
+  <section class="franja">
+    <div class="env">
+      <div class="rej c3">
+        <div><h3>Fuentes</h3><ul class="lista-m" style="margin-top:12px">
+          <li>Informe Anual de Políticas Nacionales 2025, CEPLAN.</li>
+          <li>Reportes de cumplimiento 2025 de las rectorías y conductoras; reportes 2024 para el nivel del año anterior.</li>
+          <li>Reporte de seguimiento de los indicadores de políticas nacionales, valores 2019–2025.</li>
+          <li>Matriz de consistencia de las políticas nacionales aprobadas.</li></ul></div>
+        <div><h3>Verificación</h3><p class="mini" style="margin-top:12px; font-size:.95rem">El procesamiento recalcula el índice de las 42 políticas con la fórmula oficial y se detiene si alguna cifra difiere del informe publicado. Coinciden las 42 puntuaciones, el promedio (40.1), el máximo (70.8), el mínimo (8.3), la distribución por situación y las proporciones de la síntesis del informe.</p></div>
+        <div><h3>Calidad de los datos</h3><ul class="lista-m" style="margin-top:12px" id="calidadMet"></ul></div>
+      </div>
+    </div>
+  </section>
+  <section class="franja gris">
+    <div class="env">
+      <h3>Al interpretar</h3>
+      <ul class="lista-m" style="margin-top:12px; max-width:90ch">
+        <li>El índice no mide el impacto en la población: resume lo que el reporte de cada política permite acreditar.</li>
+        <li>Un puntaje bajo puede deberse a falta de información y no necesariamente a una política que no funcione.</li>
+        <li>Los resultados de 2025 no son comparables con informes anteriores porque cambiaron las reglas de calificación.</li>
+        <li>Las políticas difieren en antigüedad, alcance y población objetivo; el orden no es un ranking de mérito.</li>
+        <li>Las relaciones del análisis son asociaciones entre 42 casos, no relaciones causales.</li>
+        <li>El simulador de la ficha es ilustrativo: muestra cuánto cambia el índice al variar cada criterio, no qué tan fácil es lograrlo.</li>
+        <li>No hay mapa porque no hay dato territorial: el índice se calcula por política nacional, con alcance nacional. Pintar los 25 departamentos del mismo color sugeriría una desagregación que la evaluación no tiene.</li>
+      </ul>
+    </div>
+  </section>
+</div>
+</main>
+
+<footer>
+  <div class="env">
+    <p><b>Visualización independiente</b> elaborada por Alexander Noblejas, integrante del equipo técnico del Informe Anual de Políticas Nacionales 2024 y 2025, a partir de sus resultados y de los reportes de las políticas nacionales. No es una publicación oficial del CEPLAN; ante cualquier diferencia prevalece el informe publicado.</p>
+    <p>Tarea 3 del curso Python Intermedio, Diplomatura en Ciencia de Datos (QLAB). Desarrollado con asistencia de inteligencia artificial; las cifras fueron verificadas contra el documento oficial.</p>
+  </div>
+</footer>
+<div class="pista" id="pista" role="status" aria-live="polite"></div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+"use strict";
+/* ================================================================ datos */
+const D = window.DATOS, P = D.politicas, R = D.resumen, CR = D.criterios, EST = D.estandares;
+const CAMPOS = D.indicadores.campos, CAT = D.indicadores.catalogo;
+const IND = D.indicadores.filas.map(f => { const o = {}; CAMPOS.forEach((c,i) => o[c] = f[i]); return o; });
+const porEtq = {}, porN = {};
+P.forEach(p => { porEtq[p.etiqueta] = p; porN[p.n] = p; });
+
+const PAL10 = ["#B01515","#B03015","#B04A15","#B06515","#B07F15","#B09A15","#ACB015","#91B015","#4BB015","#1DB015"];
+const PAL5  = ["#B01515","#B04A15","#B09A15","#91B015","#1DB015"];
+const SIT = {"Baja":"#B04A15","Media":"#B09A15","Media-alta":"#91B015","Alta":"#1DB015"};
+const MAX = [5,5,5,5,5,3];
+const ANIOS = [2019,2020,2021,2022,2023,2024,2025];
+const AZUL = "#404B62", ND = "#A7AEBA";
+const PROM = CR.map(c => c.promedio);
+
+/* ================================================================ utilidades */
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const nf = (n, d=1) => n == null || isNaN(n) ? "—" : Number(n).toLocaleString("es-PE", {minimumFractionDigits:d, maximumFractionDigits:d});
+const ent = n => n == null ? "—" : Number(n).toLocaleString("es-PE");
+const pct = (n, d=1) => n == null ? "—" : nf(n, d) + " %";
+const val = (n, pa) => n == null ? "—" : Number(n).toLocaleString("es-PE", {maximumFractionDigits:2}) + (pa === "Porcentaje" ? " %" : "");
+const colI = v => PAL10[Math.max(0, Math.min(9, Math.floor(v/10)))];
+const colP = (c, i) => PAL5[Math.round(4*(c-1)/(MAX[i]-1))];
+const corta = (s, n) => s && s.length > n ? s.slice(0, n-1) + "…" : (s || "");
+const ispnDe = c => 100 * c.reduce((a,v,i) => a + (v-1)/(MAX[i]-1), 0) / 6;
+const sitDe = v => v < 40 ? "Baja" : v < 60 ? "Media" : v < 80 ? "Media-alta" : "Alta";
+const plural = (n, s, p) => `${ent(n)} ${n === 1 ? s : p}`;
+
+const pista = $("#pista");
+function flotar(e, html){
+  pista.innerHTML = html; pista.style.opacity = 1;
+  pista.style.left = Math.min((e.clientX||0) + 14, innerWidth - 310) + "px";
+  pista.style.top = Math.min((e.clientY||0) + 16, innerHeight - 110) + "px";
+}
+const ocultar = () => pista.style.opacity = 0;
+function conPista(el, html){
+  el.addEventListener("mousemove", e => flotar(e, html));
+  el.addEventListener("mouseleave", ocultar);
+  el.addEventListener("focus", () => { const r = el.getBoundingClientRect(); flotar({clientX:r.right, clientY:r.top}, html); });
+  el.addEventListener("blur", ocultar);
+}
+function activable(el, fn){
+  el.addEventListener("click", fn);
+  el.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); fn(e); } });
+}
+function segmento(cont, opciones, estado, alCambiar){
+  const multiple = estado instanceof Set;
+  const pinta = () => cont.querySelectorAll("button").forEach(b =>
+    b.setAttribute("aria-pressed", multiple ? estado.has(b.dataset.v) : b.dataset.v === cont.dataset.sel));
+  cont.dataset.sel = multiple ? "" : estado;
+  cont.innerHTML = opciones.map(([v,t]) => `<button type="button" data-v="${esc(v)}">${esc(t)}</button>`).join("");
+  pinta();
+  cont.addEventListener("click", e => {
+    const b = e.target.closest("button"); if(!b) return;
+    const v = b.dataset.v;
+    if(multiple){ estado.has(v) ? estado.delete(v) : estado.add(v); if(!estado.size) estado.add(v); }
+    else cont.dataset.sel = v;
+    pinta(); alCambiar(multiple ? estado : v);
+  });
+  return { reiniciar(nuevo){ if(multiple){ estado.clear(); nuevo.forEach(x => estado.add(x)); } else cont.dataset.sel = nuevo; pinta(); } };
+}
+function cuantil(a, q){ const s = [...a].sort((x,y)=>x-y), p = (s.length-1)*q, b = Math.floor(p);
+  return s[b+1] !== undefined ? s[b] + (p-b)*(s[b+1]-s[b]) : s[b]; }
+function pearson(x, y){ const n = x.length, mx = x.reduce((a,b)=>a+b,0)/n, my = y.reduce((a,b)=>a+b,0)/n;
+  let a=0,b=0,c=0; for(let i=0;i<n;i++){ a += (x[i]-mx)*(y[i]-my); b += (x[i]-mx)**2; c += (y[i]-my)**2; } return a/Math.sqrt(b*c); }
+function rangos(a){ const o = a.map((v,i)=>[v,i]).sort((p,q)=>p[0]-q[0]), r = Array(a.length);
+  for(let i=0;i<o.length;){ let j=i; while(j+1<o.length && o[j+1][0]===o[i][0]) j++; for(let k=i;k<=j;k++) r[o[k][1]]=(i+j)/2+1; i=j+1; } return r; }
+const fuerza = r => { const a = Math.abs(r); return a < .1 ? "prácticamente nula" : a < .3 ? "débil" : a < .5 ? "moderada" : "fuerte"; };
+const promedio = a => a.reduce((x,y)=>x+y,0) / (a.length || 1);
+
+/* Miniserie: valores observados (línea) y metas (puntos huecos) */
+function chispa(vo, le, w=104, h=30){
+  const vs = (vo||[]).map(v => v), ls = (le||[]).map(v => v);
+  const todos = [...vs, ...ls].filter(v => v != null);
+  if(vs.filter(v => v != null).length < 1) return `<span class="mini">sin serie</span>`;
+  let mn = Math.min(...todos), mx = Math.max(...todos); if(mn === mx){ mn -= 1; mx += 1; }
+  const X = i => 4 + (w-8)*i/6, Y = v => h-4 - (h-8)*(v-mn)/(mx-mn);
+  let d = "", on = false;
+  vs.forEach((v,i) => { if(v == null){ on = false; return; } d += (on ? "L" : "M") + X(i).toFixed(1) + "," + Y(v).toFixed(1); on = true; });
+  const ult = vs.map((v,i)=>[v,i]).filter(a => a[0] != null).pop();
+  const metas = ls.map((v,i) => v == null ? "" : `<circle cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="1.7" fill="none" stroke="#1DB015" stroke-width="1"/>`).join("");
+  return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-label="Serie 2019 a 2025">${metas}
+    <path d="${d}" fill="none" stroke="${AZUL}" stroke-width="1.7" stroke-linejoin="round"/>
+    <circle cx="${X(ult[1])}" cy="${Y(ult[0])}" r="2.6" fill="${AZUL}"/></svg>`;
+}
+const MEJ = [["▲","Mejoró","#6E8A12"],["▼","Retrocedió","#B04A15"],["–","Sin dato",ND]];
+function marcaMejora(e){ const [s,t,c] = MEJ[e]; return `<span class="m-mej" style="color:${c}" title="${t} frente al año anterior"><b>${s}</b>${t}</span>`; }
+function marcaMeta(av){
+  if(av == null) return `<span class="m-mej" style="color:${ND}" title="Sin meta o sin dato para 2025">○ Sin meta</span>`;
+  if(av >= 100) return `<span class="m-mej" style="color:#1C7F14" title="Alcanzó su meta 2025">● Meta</span>`;
+  const c = av >= 50 ? "#B09A15" : "#B04A15";
+  return `<span class="m-mej" style="color:${c === "#B09A15" ? "#7A6A0E" : c}" title="Avance de ${nf(av)} % respecto de su meta 2025"><svg width="22" height="8" aria-hidden="true"><rect width="22" height="8" fill="#E6E9EE"/><rect width="${(22*Math.max(av,0)/100).toFixed(1)}" height="8" fill="${c}"/></svg>${nf(av,0)} %</span>`;
+}
+
+/* ================================================================ estado y rutas */
+const VISTAS = ["panorama","analisis","ficha","indicadores","reportes","metodologia"];
+const CON_POL = new Set(["ficha","indicadores","reportes"]);
+const st = { vista:"panorama", pol:P[0].etiqueta };
+const hecho = {};
+let historial = true;
+
+function leerHash(){
+  let [, v, e] = (location.hash || "").split("/");
+  if(v === "politicas") v = "ficha";          // enlaces de la versión anterior
+  if(VISTAS.includes(v)) st.vista = v;
+  if(e && porEtq[decodeURIComponent(e)]) st.pol = decodeURIComponent(e);
+}
+function escribirHash(){
+  if(!historial) return;
+  const h = "#/" + st.vista + (CON_POL.has(st.vista) ? "/" + encodeURIComponent(st.pol) : "");
+  try { if(location.hash !== h) history.replaceState(null, "", h); } catch(_) { historial = false; }
+}
+function ir(v, etq){ if(etq) st.pol = etq; st.vista = v; escribirHash(); mostrar(); window.scrollTo(0, 0); }
+function mostrar(){
+  $$("#pestanas [role=tab]").forEach(b => { const on = b.dataset.v === st.vista; b.setAttribute("aria-selected", on); b.tabIndex = on ? 0 : -1; });
+  VISTAS.forEach(v => $("#v-" + v).classList.toggle("oculto", v !== st.vista));
+  const p = porEtq[st.pol];
+  $("#polAct").innerHTML = `Política activa: <b>${esc(p.etiqueta)}</b>`;
+  ({panorama, analisis, ficha, indicadores, reportes, metodologia})[st.vista]();
+}
+function elegirPolitica(etq){ st.pol = etq; escribirHash(); if(CON_POL.has(st.vista)) mostrar(); else ir("ficha", etq); }
+
+/* ---------- buscador de políticas (combobox accesible) */
+(function(){
+  const inp = $("#busca"), lst = $("#opciones");
+  let act = -1, vis = [];
+  const pinta = () => {
+    const q = inp.value.trim().toLowerCase();
+    vis = P.filter(p => !q || (p.etiqueta + " " + p.nombre + " " + p.ministerio).toLowerCase().includes(q)).slice(0, 42);
+    lst.innerHTML = vis.length ? vis.map((p,i) => `<div role="option" id="op-${i}" data-e="${esc(p.etiqueta)}" aria-selected="${i === act}">
+        <span><span class="s">${esc(p.etiqueta)}</span><span class="t">${esc(p.nombre)}</span></span>
+        <span class="pild" style="background:${colI(p.ispn)}">${nf(p.ispn)}</span></div>`).join("")
+      : `<div style="padding:12px" class="mini">Ninguna política coincide. Prueba con una sigla, como PNMSC.</div>`;
+    inp.setAttribute("aria-activedescendant", act >= 0 ? "op-" + act : "");
+  };
+  const abrir = () => { lst.classList.remove("oculto"); inp.setAttribute("aria-expanded", true); pinta(); };
+  const cerrar = () => { lst.classList.add("oculto"); inp.setAttribute("aria-expanded", false); act = -1; };
+  const elegir = etq => { cerrar(); inp.value = ""; inp.blur(); elegirPolitica(etq); };
+  inp.addEventListener("focus", abrir);
+  inp.addEventListener("input", () => { act = 0; abrir(); });
+  inp.addEventListener("keydown", e => {
+    if(e.key === "ArrowDown"){ e.preventDefault(); act = Math.min(vis.length-1, act+1); pinta(); $("#op-"+act)?.scrollIntoView({block:"nearest"}); }
+    else if(e.key === "ArrowUp"){ e.preventDefault(); act = Math.max(0, act-1); pinta(); $("#op-"+act)?.scrollIntoView({block:"nearest"}); }
+    else if(e.key === "Enter" && vis[act]){ e.preventDefault(); elegir(vis[act].etiqueta); }
+    else if(e.key === "Escape"){ cerrar(); inp.blur(); }
+  });
+  lst.addEventListener("mousedown", e => { const o = e.target.closest("[role=option]"); if(o){ e.preventDefault(); elegir(o.dataset.e); } });
+  document.addEventListener("click", e => { if(!e.target.closest(".buscador")) cerrar(); });
+})();
+
+/* ================================================================ PANORAMA */
+function panorama(){
+  if(hecho.panorama) return; hecho.panorama = true;
+  const alc = 100 * R.alcanza_meta / R.con_meta;
+  $("#lede").innerHTML = `El índice resume en un puntaje de 0 a 100 cómo avanza cada política en resultados, implementación y mejora continua. El promedio del conjunto es <b>${nf(R.promedio)}</b>, la mitad de las políticas está entre ${nf(cuantil(P.map(p=>p.ispn),.25))} y ${nf(cuantil(P.map(p=>p.ispn),.75))} puntos, y la más alta llega a ${nf(R.maximo)}.`;
+
+  const W = 1200, base = 196, m = 16, x = v => m + (W-2*m)*v/100;
+  let h = "";
+  [[0,40,"Baja"],[40,60,"Media"],[60,80,"Media-alta"],[80,100,"Alta"]].forEach(([a,b,n]) =>
+    h += `<rect x="${x(a)}" y="40" width="${x(b)-x(a)}" height="${base-40}" fill="${SIT[n]}" opacity=".07"/>
+      <rect x="${x(a)}" y="40" width="${x(b)-x(a)-2}" height="3" fill="${SIT[n]}"/>
+      <text x="${x(a)}" y="30" font-size="13" font-weight="600" fill="${SIT[n]}" style="font-stretch:88%">Situación ${n.toLowerCase()}${n === "Alta" ? " · ninguna política" : ""}</text>`);
+  for(let v=0; v<=100; v+=10) h += `<text class="eje" x="${x(v)}" y="${base+18}" text-anchor="middle">${v}</text>`;
+  h += `<line x1="${m}" y1="${base}" x2="${W-m}" y2="${base}" stroke="#8D94A1"/>`;
+  const pila = {};
+  P.forEach(p => { const k = p.ispn, i = (pila[k] = (pila[k]||0)+1) - 1;
+    h += `<circle class="punto" cx="${x(k)}" cy="${base-9-i*12.6}" r="5.6" fill="${colI(k)}" stroke="#fff" stroke-width="1"
+      data-e="${esc(p.etiqueta)}" tabindex="0" role="button" aria-label="${esc(p.etiqueta)}, ${nf(k)} puntos"/>`; });
+  const pm = x(R.promedio);
+  h += `<line x1="${pm}" y1="${base}" x2="${pm}" y2="${base+36}" stroke="${AZUL}" stroke-width="2"/>
+        <text x="${pm+6}" y="${base+34}" font-size="12.5" font-weight="600" fill="${AZUL}">Promedio ${nf(R.promedio)}</text>`;
+  const top = P[0], bot = P[P.length-1];
+  h += `<path d="M${x(top.ispn)},${base-16} L${x(top.ispn)},${base-60} L${x(top.ispn)+14},${base-60}" fill="none" stroke="#8D94A1"/>
+        <text x="${x(top.ispn)+18}" y="${base-56}" font-size="12.5" fill="#1D2330"><tspan font-weight="700">${esc(top.etiqueta)} · ${nf(top.ispn)}</tspan> la más alta</text>
+        <path d="M${x(bot.ispn)},${base-16} L${x(bot.ispn)},${base-46} L${x(bot.ispn)+14},${base-46}" fill="none" stroke="#8D94A1"/>
+        <text x="${x(bot.ispn)+18}" y="${base-42}" font-size="12.5" fill="#1D2330"><tspan font-weight="700">${esc(bot.etiqueta)} · ${nf(bot.ispn)}</tspan> la más baja</text>`;
+  const g = $("#gEscala"); g.innerHTML = h;
+  g.querySelectorAll(".punto").forEach(c => { const p = porEtq[c.dataset.e];
+    conPista(c, `<b>${esc(p.etiqueta)} · ${nf(p.ispn)}</b><br>${esc(corta(p.nombre, 90))}<br>Situación ${p.situacion.toLowerCase()}`);
+    activable(c, () => ir("ficha", p.etiqueta)); });
+
+  const cifras = [
+    [nf(R.promedio), "puntaje promedio de las 42 políticas, sobre 100"],
+    [R.baja, "políticas en situación baja, menos de 40 puntos"],
+    [R.alta, "políticas en situación alta, 80 puntos o más"],
+    [pct(R.pct_serv,0), `de los ${ent(R.serv_total)} servicios previstos están en marcha`],
+    [pct(alc,0), `de los indicadores con meta alcanzó su meta 2025`],
+  ];
+  $("#cifras").innerHTML = cifras.map(([v,n]) => `<div><div class="cifra">${v}</div><div class="n">${n}</div></div>`).join("");
+
+  let dim = "", t = "", filas = "";
+  const cierra = () => { if(dim) t += `<div class="dim">${esc(dim)}</div><div class="filas">${filas}</div>`; filas = ""; };
+  CR.forEach(c => {
+    if(c.dimension !== dim){ cierra(); dim = c.dimension; }
+    const tot = c.dist.reduce((a,b)=>a+b,0);
+    const seg = c.dist.map((n,k) => n ? `<span style="width:${100*n/tot}%; background:${PAL5[Math.round(4*k/(c.maximo-1))]}" title="${n} políticas con ${k+1}"></span>` : "").join("");
+    filas += `<div class="fila-c"><span class="nm">${esc(c.nombre)}</span><span class="apilada ap" role="img" aria-label="${esc(c.nombre)}: ${c.dist.map((n,k)=>`${n} con puntaje ${k+1}`).join(", ")}">${seg}</span>
+      <span class="vl"><b>${nf(c.promedio,1)}</b> / ${c.maximo}</span></div>`;
+  });
+  cierra();
+  $("#termo").innerHTML = `<div class="termo">${t}</div>`;
+  $("#leyPunt").innerHTML = PAL5.map((c,i) => `<span><i style="background:${c}"></i>${i+1}</span>`).join("") + `<span>Puntaje obtenido (en alternativas de mejora la escala es 1, 2 y 3)</span>`;
+
+  const C = R.cruce_meta, tot = C.mejora_alcanza + C.mejora_no_alcanza + C.retrocede_alcanza + C.retrocede_no_alcanza;
+  const caja = (n, txt, bg, fg) => `<div class="cuadro" style="background:${bg}; color:${fg}"><div><div class="cifra" style="color:${fg}">${ent(n)}</div><span class="pc">${pct(100*n/tot,0)} de los indicadores</span></div><p>${txt}</p></div>`;
+  $("#cuadrantes").innerHTML = `<span></span><span class="eh">Alcanzó su meta 2025</span><span class="eh">No alcanzó su meta</span>
+    <span class="ev">Mejoró</span>
+    ${caja(C.mejora_alcanza, "Mejoran y cumplen. Coinciden el índice y la meta.", "#1DB015", "#fff")}
+    ${caja(C.mejora_no_alcanza, "Mejoran, pero no llegan a la meta. El índice los cuenta como avance.", "#E7F0C9", "#3D4A0D")}
+    <span class="ev">No mejoró</span>
+    ${caja(C.retrocede_alcanza, "Cumplen la meta sin mejorar. Puede indicar metas poco exigentes.", "#F4E9C8", "#5A4A12")}
+    ${caja(C.retrocede_no_alcanza, "Ni mejoran ni cumplen. Requieren atención.", "#B04A15", "#fff")}`;
+  $("#lecturaCruce").innerHTML = `<p><b>${ent(C.mejora_no_alcanza + C.retrocede_alcanza)} de ${ent(tot)}</b> indicadores (${pct(100*(C.mejora_no_alcanza+C.retrocede_alcanza)/tot,0)}) están en una zona donde la mejora anual y la meta no coinciden.</p>
+    <p>Un dato para leer ese cuadrante: en <b>${ent(R.meta_ya_alcanzada)} de los ${ent(C.retrocede_alcanza)}</b> que cumplen la meta sin haber mejorado, el valor del año anterior ya igualaba o superaba la meta fijada para 2025.</p>
+    <p>Para quien gestiona una política, la mejora anual dice si se avanza; la meta dice si se avanza lo suficiente. Las dos preguntas son necesarias, y cada indicador se puede abrir en la pestaña de indicadores para ver su serie completa.</p>
+    <p class="mini">Se consideran los ${ent(tot)} indicadores que tienen a la vez una comparación frente al año anterior y un avance respecto de su meta 2025.</p>`;
+}
+
+/* ================================================================ ANÁLISIS */
+const an = { x:"anios", color:"situacion", etq:"todas", ordenM:"distancia", orden:{col:"ispn", dir:-1} };
+const EJES = {
+  anios:{t:"Años de vigencia de la política al 2025", f:p => p.anios, disc:true,
+    lee:r => r <= -.3 ? "Las políticas con más años de vigencia tienden a obtener puntajes más bajos. El tiempo transcurrido no se ha traducido en mejores resultados acreditados ni en mejor información para el seguimiento."
+      : r >= .3 ? "Las políticas más antiguas tienden a obtener puntajes más altos." : "La antigüedad no guarda una relación clara con el puntaje."},
+  pct_meta:{t:"Indicadores que alcanzaron su meta 2025 (%)", f:p => p.pct_meta, max:100,
+    lee:r => `El cumplimiento de metas se asocia al índice solo de forma ${fuerza(r)}. Hay políticas que alcanzan buena parte de sus metas y quedan en situación baja, y otras con puntaje medio que cumplen pocas: el índice valora la mejora y lo que el reporte acredita, no el logro de lo programado.`},
+  ips:{t:"Indicadores por servicio", f:p => p.n_ind / Math.max(1, p.n_serv),
+    lee:r => r <= -.25 ? "Las políticas con más indicadores por servicio tienden a puntuar menos. Medir mucho no equivale a medir mejor: más indicadores también significan más valores sin reportar y más ocasiones de retroceso." : "La densidad de indicadores no se asocia claramente al puntaje."},
+  n_serv:{t:"Número de servicios de la política", f:p => p.n_serv,
+    lee:r => `El tamaño de la política, medido por su número de servicios, tiene una relación ${fuerza(r)} con el puntaje: la escala de la política no lo explica.`},
+};
+function analisis(){
+  if(!hecho.analisis){
+    hecho.analisis = true;
+    $("#selX").addEventListener("change", e => { an.x = e.target.value; gExplora(); });
+    segmento($("#segColor"), [["situacion","Situación"],["tipo","Tipo de política"]], an.color, v => { an.color = v; gExplora(); });
+    segmento($("#segEtq"), [["todas","Todas"],["extremos","Extremos"],["ninguna","Ninguna"]], an.etq, v => { an.etq = v; gExplora(); });
+    segmento($("#segOrdenM"), [["distancia","Mayor distancia"],["ispn","Puntaje del índice"],["meta","Metas alcanzadas"]], an.ordenM, v => { an.ordenM = v; gMancuerna(); });
+  }
+  gExplora(); gMancuerna(); gCuadrante(); gEstandar(); gNivel(); matriz();
+}
+const COL_TIPO = {"Multisectorial":AZUL, "Sectorial":"#4DD0E1"};
+function gExplora(){
+  const E = EJES[an.x], datos = P.filter(p => E.f(p) != null);
+  const W = 1200, H = 700, iz = 64, de = 130, ar = 34, ab = 64;
+  const xs = datos.map(E.f), x0 = 0, x1 = E.disc ? Math.max(8, Math.max(...xs)+1) : (E.max || Math.ceil(Math.max(...xs)*1.1/5)*5);
+  const X = v => iz + (W-iz-de)*(v-x0)/(x1-x0), Y = v => H-ab - (H-ab-ar)*v/85;
+  const q1 = cuantil(P.map(p=>p.ispn),.25), q3 = cuantil(P.map(p=>p.ispn),.75);
+  let h = `<rect x="${X(x0)}" y="${Y(q3)}" width="${X(x1)-X(x0)}" height="${Y(q1)-Y(q3)}" fill="#D9EAF7" opacity=".75"/>`;
+  for(let v=0; v<=80; v+=10) h += `<line x1="${X(x0)}" y1="${Y(v)}" x2="${X(x1)}" y2="${Y(v)}" stroke="#EEF0F3"/><text class="eje" x="${iz-10}" y="${Y(v)+4}" text-anchor="end">${v}</text>`;
+  const pasos = E.disc ? [...Array(x1+1).keys()] : [...Array(6).keys()].map(i => Math.round(x1*i/5*10)/10);
+  pasos.forEach(v => h += `<line x1="${X(v)}" y1="${Y(0)}" x2="${X(v)}" y2="${Y(0)+5}" stroke="#8D94A1"/><text class="eje" x="${X(v)}" y="${Y(0)+20}" text-anchor="middle">${nf(v, E.disc || v % 1 === 0 ? 0 : 1)}</text>`);
+  h += `<line x1="${X(x0)}" y1="${Y(0)}" x2="${X(x1)}" y2="${Y(0)}" stroke="#8D94A1"/>
+    <line x1="${X(x0)}" y1="${Y(80)}" x2="${X(x1)}" y2="${Y(80)}" stroke="#1DB015" stroke-width="1.6" stroke-dasharray="8 6"/>
+    <text x="${X(x0)+8}" y="${Y(80)-8}" fill="#1C7F14" font-size="13" font-style="italic">Situación alta, desde 80</text>
+    <line x1="${X(x0)}" y1="${Y(40)}" x2="${X(x1)}" y2="${Y(40)}" stroke="#B04A15" stroke-width="1.6" stroke-dasharray="8 6"/>
+    <text x="${X(x0)+8}" y="${Y(40)+18}" fill="#B04A15" font-size="13" font-style="italic">Situación baja, menos de 40</text>
+    <text class="eje" x="${(X(x0)+X(x1))/2}" y="${H-16}" text-anchor="middle" font-size="13">${esc(E.t)}</text>
+    <text class="eje" transform="translate(18,${Y(42)}) rotate(-90)" text-anchor="middle" font-size="13">Puntaje del ISPN</text>`;
+  if(!E.disc){
+    const ys = datos.map(p=>p.ispn), mx = promedio(xs), my = promedio(ys);
+    let sxy=0,sxx=0; xs.forEach((v,i)=>{ sxy+=(v-mx)*(ys[i]-my); sxx+=(v-mx)**2; });
+    const b = sxy/sxx, a = my-b*mx, xa = Math.min(...xs), xb = Math.max(...xs);
+    h += `<line x1="${X(xa)}" y1="${Y(a+b*xa)}" x2="${X(xb)}" y2="${Y(a+b*xb)}" stroke="${AZUL}" stroke-width="1.4" stroke-dasharray="3 4" opacity=".7"/>`;
+  }
+  const grupos = {}; datos.forEach(p => { const k = E.f(p).toFixed(2)+"|"+p.ispn; (grupos[k]=grupos[k]||[]).push(p); });
+  const pos = []; Object.values(grupos).forEach(g => g.forEach((p,i) => pos.push({p, cx:X(E.f(p))+(i-(g.length-1)/2)*11, cy:Y(p.ispn)})));
+  const color = p => an.color === "tipo" ? COL_TIPO[p.tipo] || ND : colI(p.ispn);
+  const ord = [...P].sort((a,b)=>b.ispn-a.ispn), ext = new Set([...ord.slice(0,4), ...ord.slice(-4)].map(p=>p.id));
+  const conE = pos.filter(o => an.etq === "todas" || (an.etq === "extremos" && ext.has(o.p.id)));
+  const cols = {}; conE.forEach(o => { const k = E.disc ? E.f(o.p) : Math.round(o.cx/90); (cols[k]=cols[k]||[]).push(o); });
+  const choca = (a, b, ty) => pos.some(q => q.cx > a && q.cx < b && Math.abs(q.cy - ty) < 10);
+  let lin = "", txt = "";
+  Object.values(cols).forEach(col => {
+    col.sort((a,b)=>a.cy-b.cy);
+    const der = Math.max(...col.map(o=>o.cx))+12, izq = Math.min(...col.map(o=>o.cx))-12;
+    let ult = -1e9;
+    col.forEach(o => {
+      const ty = Math.max(o.cy, ult+15); ult = ty;
+      const con = o.p.ispn >= 58 || o.p.ispn < 21, t = esc(o.p.etiqueta) + (con ? " · " + nf(o.p.ispn) : ""), w = (o.p.etiqueta.length + (con?7:0))*7.2;
+      const izqOk = choca(der, der+w, ty) && !choca(izq-w, izq, ty) && Math.abs(ty-o.cy) < 2, lx = izqOk ? izq : der;
+      if(Math.abs(ty-o.cy) > 2) lin += `<line x1="${o.cx+5}" y1="${o.cy}" x2="${lx-2}" y2="${ty-4}" stroke="#B3B9C4"/>`;
+      txt += `<text x="${lx}" y="${ty+4}" font-size="12" font-weight="600" fill="${an.color === "tipo" ? "#353C4A" : colI(o.p.ispn)}" ${izqOk ? 'text-anchor="end"' : ""} style="font-stretch:88%">${t}</text>`;
+    });
+  });
+  h += lin + pos.map(o => `<circle class="punto" cx="${o.cx}" cy="${o.cy}" r="7" fill="${color(o.p)}" stroke="#fff" stroke-width="1.5" data-e="${esc(o.p.etiqueta)}" tabindex="0" role="button" aria-label="${esc(o.p.etiqueta)}: ${nf(o.p.ispn)} puntos"/>`).join("") + txt;
+  const g = $("#gExplora"); g.innerHTML = h;
+  g.querySelectorAll(".punto").forEach(c => { const p = porEtq[c.dataset.e], v = E.f(p);
+    conPista(c, `<b>${esc(p.etiqueta)} · ISPN ${nf(p.ispn)}</b><br>${esc(corta(p.nombre,90))}<br>${esc(E.t)}: ${E.disc ? v + " años" : an.x === "pct_meta" ? pct(v) : nf(v, an.x === "ips" ? 1 : 0)}<br>${esc(p.tipo)} · ${esc(p.ministerio)}`);
+    activable(c, () => ir("ficha", p.etiqueta)); });
+  $("#leyExplora").innerHTML = an.color === "tipo"
+    ? Object.entries(COL_TIPO).map(([k,c]) => { const v = P.filter(p=>p.tipo===k); return `<span><i class="o" style="background:${c}"></i>${k}: ${v.length} políticas, promedio ${nf(promedio(v.map(p=>p.ispn)))}</span>`; }).join("")
+    : `<span><i style="background:#D9EAF7"></i>Mitad central de las políticas (${nf(q1)} a ${nf(q3)})</span>` + (E.disc ? "" : `<span>- - - Tendencia lineal</span>`);
+  const ys = datos.map(p=>p.ispn), r = pearson(xs, ys), rs = pearson(rangos(xs), rangos(ys));
+  let extra = "";
+  if(E.disc){
+    const gr = {}; datos.forEach(p => { const k = p.anios <= 3 ? "Hasta 3 años" : p.anios <= 5 ? "De 4 a 5 años" : "6 años o más"; (gr[k]=gr[k]||[]).push(p.ispn); });
+    extra = `<p>${["Hasta 3 años","De 4 a 5 años","6 años o más"].filter(k=>gr[k]).map(k => `${k}: <b>${nf(promedio(gr[k]))}</b> en promedio (${plural(gr[k].length,"política","políticas")})`).join(" · ")}.</p>`;
+  }
+  $("#lecturaExplora").innerHTML = `<p><b>Correlación r = ${nf(r,2)}</b> (Spearman ${nf(rs,2)}), una relación ${fuerza(r)} entre ${datos.length} políticas.</p>${extra}<p>${E.lee(r)}</p><p class="mini">Asociación descriptiva entre 42 casos; no implica causalidad.</p>`;
+}
+
+function gMancuerna(){
+  const datos = P.filter(p => p.pct_meta != null).map(p => {
+    const m = p.meta, ev = m.mejora_alcanza + m.mejora_no_alcanza + m.retrocede_alcanza + m.retrocede_no_alcanza;
+    return {p, mej: ev ? 100*(m.mejora_alcanza+m.mejora_no_alcanza)/ev : null, meta: p.pct_meta};
+  }).filter(d => d.mej != null);
+  datos.sort(an.ordenM === "ispn" ? (a,b)=>b.p.ispn-a.p.ispn : an.ordenM === "meta" ? (a,b)=>b.meta-a.meta : (a,b)=>Math.abs(b.meta-b.mej)-Math.abs(a.meta-a.mej));
+  const W = 1180, iz = 150, de = 70, fil = 22, H = datos.length*fil + 40;
+  const X = v => iz + (W-iz-de)*v/100;
+  let h = "";
+  [0,25,50,75,100].forEach(v => h += `<line x1="${X(v)}" y1="22" x2="${X(v)}" y2="${H-8}" stroke="#ECEEF1"/><text class="eje" x="${X(v)}" y="14" text-anchor="middle">${v} %</text>`);
+  datos.forEach((d,i) => {
+    const y = 34 + i*fil, a = X(d.mej), b = X(d.meta);
+    h += `<g class="fila-m" data-e="${esc(d.p.etiqueta)}" tabindex="0" role="button" style="cursor:pointer">
+      <rect x="0" y="${y-11}" width="${W}" height="${fil}" fill="transparent"/>
+      <text class="etq" x="${iz-14}" y="${y+4}" text-anchor="end" font-weight="600" style="font-stretch:85%">${esc(d.p.etiqueta)}</text>
+      <rect x="${iz-8}" y="${y-6}" width="4" height="12" fill="${colI(d.p.ispn)}"/>
+      <line x1="${Math.min(a,b)}" y1="${y}" x2="${Math.max(a,b)}" y2="${y}" stroke="${Math.abs(d.meta-d.mej) >= 20 ? "#B04A15" : "#B9C0CB"}" stroke-width="2.5"/>
+      <circle cx="${a}" cy="${y}" r="5.5" fill="${AZUL}"/>
+      <circle cx="${b}" cy="${y}" r="5" fill="#fff" stroke="#1DB015" stroke-width="2.2"/>
+      <text class="eje" x="${W-de+12}" y="${y+4}">${d.meta > d.mej ? "+" : ""}${nf(d.meta - d.mej,0)} pp</text></g>`;
+  });
+  const g = $("#gMancuerna"); g.setAttribute("viewBox", `0 0 ${W} ${H}`); g.innerHTML = h;
+  g.querySelectorAll(".fila-m").forEach(el => { const d = datos.find(x => x.p.etiqueta === el.dataset.e);
+    conPista(el, `<b>${esc(d.p.etiqueta)} · ISPN ${nf(d.p.ispn)}</b><br>Mejoraron: ${pct(d.mej,0)} de sus indicadores con comparación<br>Alcanzaron su meta: ${pct(d.meta,0)} de los que tienen meta<br>Clic para abrir la ficha`);
+    activable(el, () => ir("ficha", d.p.etiqueta)); });
+}
+
+function gCuadrante(){
+  const datos = P.filter(p => p.c3.pct != null && p.c4.pct != null);
+  const W = 560, H = 470, iz = 52, ab = 56, ar = 14, de = 14, X = v => iz + (W-iz-de)*v/100, Y = v => H-ab - (H-ab-ar)*v/100;
+  let h = `<rect x="${X(75)}" y="${Y(100)}" width="${X(100)-X(75)}" height="${Y(50)-Y(100)}" fill="#91B015" opacity=".1"/>
+           <rect x="${X(75)}" y="${Y(50)}" width="${X(100)-X(75)}" height="${Y(0)-Y(50)}" fill="#B04A15" opacity=".1"/>`;
+  [0,25,50,75,100].forEach(t => h += `<line x1="${X(t)}" y1="${Y(0)}" x2="${X(t)}" y2="${Y(100)}" stroke="#EEF0F3"/><line x1="${X(0)}" y1="${Y(t)}" x2="${X(100)}" y2="${Y(t)}" stroke="#EEF0F3"/>
+    <text class="eje" x="${X(t)}" y="${Y(0)+17}" text-anchor="middle">${t}</text><text class="eje" x="${X(0)-8}" y="${Y(t)+4}" text-anchor="end">${t}</text>`);
+  h += `<line x1="${X(75)}" y1="${Y(0)}" x2="${X(75)}" y2="${Y(100)}" stroke="${AZUL}" stroke-dasharray="4 4"/><line x1="${X(0)}" y1="${Y(50)}" x2="${X(100)}" y2="${Y(50)}" stroke="${AZUL}" stroke-dasharray="4 4"/>
+    <text class="eje" x="${X(76)}" y="${Y(96)}">Implementa y obtiene resultados</text><text class="eje" x="${X(76)}" y="${Y(3)}">Implementa sin resultados aún</text>
+    <text class="eje" x="${(X(0)+X(100))/2}" y="${H-12}" text-anchor="middle" font-size="12.5">Servicios implementados (%)</text>
+    <text class="eje" transform="translate(14,${Y(50)}) rotate(-90)" text-anchor="middle" font-size="12.5">Indicadores de servicio que mejoraron (%)</text>`;
+  datos.forEach(p => h += `<circle class="punto" cx="${X(p.c3.pct)}" cy="${Y(p.c4.pct)}" r="6.5" fill="${colI(p.ispn)}" stroke="#fff" data-e="${esc(p.etiqueta)}" tabindex="0" role="button" aria-label="${esc(p.etiqueta)}"/>`);
+  const g = $("#gCuadrante"); g.innerHTML = h;
+  g.querySelectorAll(".punto").forEach(c => { const p = porEtq[c.dataset.e];
+    conPista(c, `<b>${esc(p.etiqueta)}</b> · ISPN ${nf(p.ispn)}<br>${p.c3.num} de ${p.c3.den} servicios en marcha<br>${p.c4.num} de ${p.c4.den} indicadores de servicio mejoraron`);
+    activable(c, () => ir("ficha", p.etiqueta)); });
+  const may = P.filter(p => p.criterios[2] >= 4), ok = may.filter(p => p.criterios[3] >= 3);
+  $("#lecturaCuadrante").innerHTML = `<p><b>${ok.length} de ${may.length}</b> políticas con la mayoría o la totalidad de sus servicios en marcha muestran resultados favorables en al menos la mitad de sus indicadores de servicios.</p>`;
+}
+
+function gEstandar(){
+  const W = 560, iz = 150, de = 44, fil = 42, H = EST.length*fil + 30, X = v => iz + (W-iz-de)*v/100;
+  let h = "";
+  [0,25,50,75,100].forEach(v => h += `<line x1="${X(v)}" y1="18" x2="${X(v)}" y2="${H-6}" stroke="#ECEEF1"/><text class="eje" x="${X(v)}" y="12" text-anchor="middle">${v} %</text>`);
+  EST.forEach((e,i) => {
+    const y = 36 + i*fil, pm = e.pct_meta ?? e.pct_fav;
+    h += `<text class="etq" x="${iz-12}" y="${y+4}" text-anchor="end" style="font-stretch:90%">${esc(e.estandar)}</text>
+      <text class="eje" x="${iz-12}" y="${y+18}" text-anchor="end">${ent(e.n)} indicadores</text>
+      <line x1="${X(Math.min(e.pct_fav, pm))}" y1="${y}" x2="${X(Math.max(e.pct_fav, pm))}" y2="${y}" stroke="#B9C0CB" stroke-width="2.5"/>
+      <circle cx="${X(e.pct_fav)}" cy="${y}" r="6" fill="${AZUL}"><title>${pct(e.pct_fav)} mejoró</title></circle>
+      ${e.pct_meta != null ? `<circle cx="${X(e.pct_meta)}" cy="${y}" r="5.5" fill="#fff" stroke="#1DB015" stroke-width="2.2"><title>${pct(e.pct_meta)} alcanzó su meta</title></circle>` : ""}`;
+  });
+  $("#gEstandar").setAttribute("viewBox", `0 0 ${W} ${H}`); $("#gEstandar").innerHTML = h;
+  const peor = EST[EST.length-1], mejor = EST[0];
+  $("#lecturaEstandar").innerHTML = `<p>Los indicadores de <b>${esc(mejor.estandar.toLowerCase())}</b> son los que más mejoran (${pct(mejor.pct_fav,0)}); los de <b>${esc(peor.estandar.toLowerCase())}</b>, los que menos (${pct(peor.pct_fav,0)}). Se incluyen los estándares con al menos 25 indicadores evaluables.</p>`;
+}
+
+function gNivel(){
+  const nv = ["Inicial","Intermedio","Avanzado"], datos = P.filter(p => nv.includes(p.nivel));
+  const W = 560, H = 330, iz = 100, de = 18, ar = 10, ab = 42, X = v => iz + (W-iz-de)*v/80, fil = (H-ar-ab)/nv.length;
+  let h = "";
+  [0,20,40,60,80].forEach(v => h += `<line x1="${X(v)}" y1="${ar}" x2="${X(v)}" y2="${H-ab}" stroke="#ECEEF1"/><text class="eje" x="${X(v)}" y="${H-ab+17}" text-anchor="middle">${v}</text>`);
+  h += `<line x1="${X(40)}" y1="${ar}" x2="${X(40)}" y2="${H-ab}" stroke="#B04A15" stroke-dasharray="5 4"/><text class="eje" x="${(X(0)+X(80))/2}" y="${H-6}" text-anchor="middle" font-size="12.5">Puntaje del ISPN</text>`;
+  const lect = [];
+  nv.forEach((n,i) => {
+    const cy = ar + fil*i + fil/2, g = datos.filter(p => p.nivel === n);
+    h += `<text class="etq" x="${iz-12}" y="${cy+4}" text-anchor="end" font-weight="600">${n}</text><text class="eje" x="${iz-12}" y="${cy+19}" text-anchor="end">${plural(g.length,"política","políticas")}</text>`;
+    if(g.length){ const m = promedio(g.map(p=>p.ispn)); h += `<line x1="${X(m)}" y1="${cy-22}" x2="${X(m)}" y2="${cy+22}" stroke="${AZUL}" stroke-width="2.5"/>`; lect.push(`${n.toLowerCase()}, ${nf(m)}`); }
+    const cnt = {}; g.forEach(p => { const j = cnt[p.ispn] = (cnt[p.ispn]||0)+1, dy = (j%2 ? -1 : 1)*Math.ceil((j-1)/2)*9;
+      h += `<circle class="punto" cx="${X(p.ispn)}" cy="${cy+dy}" r="6" fill="${colI(p.ispn)}" stroke="#fff" data-e="${esc(p.etiqueta)}" tabindex="0" role="button" aria-label="${esc(p.etiqueta)}"/>`; });
+  });
+  const g = $("#gNivel"); g.innerHTML = h;
+  g.querySelectorAll(".punto").forEach(c => { const p = porEtq[c.dataset.e];
+    conPista(c, `<b>${esc(p.etiqueta)}</b> · ISPN ${nf(p.ispn)}<br>Reportó nivel ${esc(p.nivel.toLowerCase())}${p.nivel_2024 && p.nivel_2024 !== "No reportó" ? `; en 2024, ${esc(p.nivel_2024.toLowerCase())}` : ""}`);
+    activable(c, () => ir("ficha", p.etiqueta)); });
+  const inter = datos.filter(p => p.nivel === "Intermedio" && p.ispn < 40).length;
+  $("#lecturaNivel").innerHTML = `<p>Promedio del índice según el nivel declarado: ${lect.join("; ")}.</p><p><b>${inter}</b> políticas que se declararon en nivel intermedio quedan en situación baja según el índice: la autovaloración tiende a ser más favorable que lo que los reportes permiten acreditar.</p>`;
+}
+
+function matriz(){
+  const cols = [["etiqueta","Política"],["c0","C1"],["c1","C2"],["c2","C3"],["c3","C4"],["c4","C5"],["c5","C6"],["ispn","ISPN"]];
+  const v = (p,k) => k === "etiqueta" ? p.etiqueta : k === "ispn" ? p.ispn : p.criterios[+k[1]];
+  const filas = [...P].sort((a,b) => { const x = v(a,an.orden.col), y = v(b,an.orden.col);
+    return typeof x === "string" ? an.orden.dir*x.localeCompare(y,"es") : an.orden.dir*(x-y) || b.ispn-a.ispn; });
+  let h = `<thead><tr>${cols.map(([k,t]) => `<th scope="col" data-k="${k}" tabindex="0" title="${/^c\d$/.test(k) ? esc(CR[+k[1]].nombre) : ""}" ${an.orden.col===k ? `aria-sort="${an.orden.dir>0?"ascending":"descending"}"` : ""}>${t}<span class="fl">${an.orden.col===k ? (an.orden.dir>0?"▲":"▼") : "▼"}</span></th>`).join("")}</tr></thead><tbody>`;
+  filas.forEach(p => { h += `<tr><td data-e="${esc(p.etiqueta)}" tabindex="0" role="button"><span class="sg">${esc(p.etiqueta)}</span><span class="nm">${esc(p.nombre)}</span></td>` +
+    p.criterios.map((c,i) => `<td><span class="celda" style="background:${colP(c,i)}" title="${esc(CR[i].nombre)}: ${c} de ${MAX[i]}">${c}</span></td>`).join("") +
+    `<td><span class="celda" style="background:${colI(p.ispn)}">${nf(p.ispn)}</span></td></tr>`; });
+  const t = $("#matriz"); t.innerHTML = h + "</tbody>";
+  t.querySelectorAll("th").forEach(th => activable(th, () => { const k = th.dataset.k; an.orden = {col:k, dir: an.orden.col===k ? -an.orden.dir : (k==="etiqueta"?1:-1)}; matriz(); }));
+  t.querySelectorAll("td[data-e]").forEach(td => activable(td, () => ir("ficha", td.dataset.e)));
+}
+
+/* ================================================================ FICHA */
+const fx = { abiertos:new Set(["C1"]), sim:null, simPol:null, opAb:null };
+function escalonSVG(c, i, prom){
+  const m = MAX[i], w = 190, cw = (w - (m-1)*4)/m, col = colP(c,i);
+  let s = `<svg class="esc-svg" viewBox="0 0 ${w} 26" width="${w}" height="26" aria-hidden="true">`;
+  for(let k=0;k<m;k++) s += `<rect x="${k*(cw+4)}" y="6" width="${cw}" height="12" fill="${k < c ? col : "#E6E9EE"}"/>`;
+  const px = (prom-0.5) * (cw+4) - 2;
+  s += `<line x1="${px}" y1="1" x2="${px}" y2="23" stroke="${AZUL}" stroke-width="2"/><polygon points="${px-4},0 ${px+4},0 ${px},5" fill="${AZUL}"/></svg>`;
+  return s;
+}
+function ficha(){
+  const p = porEtq[st.pol];
+  if(fx.simPol !== p.etiqueta){ fx.sim = [...p.criterios]; fx.simPol = p.etiqueta; fx.opAb = null; }
+  const ind = IND.filter(r => r.n === p.n);
+  const atn = ind.filter(r => r.e === 1 && r.av != null && r.av < 100).sort((a,b) => a.av - b.av);
+  const subt = [null,
+    p.c2.den ? `${p.c2.num} de ${p.c2.den} indicadores evaluables mejoraron` : "Sin indicadores evaluables",
+    `${p.c3.num} de ${p.c3.den} servicios en marcha`,
+    p.c4.den ? `${p.c4.num} de ${p.c4.den} indicadores evaluables mejoraron` : "Sin indicadores evaluables",
+    `${p.c5.num} de ${p.c5.den} indicadores con información suficiente`, null];
+  const perfil = CR.map((c,i) => { const k = "C"+(i+1), ab = fx.abiertos.has(k);
+    return `<button class="fila" aria-expanded="${ab}" data-c="${k}"><span class="cod">${k}</span>
+      <span class="nm"><b>${esc(c.nombre)}</b><span>${esc(subt[i] || c.dimension)}</span></span>
+      ${escalonSVG(p.criterios[i], i, PROM[i])}
+      <span class="vl">${p.criterios[i]}<small> / ${MAX[i]}</small></span><span class="chev">›</span></button>
+      <div class="com ${ab ? "" : "oculto"}">${esc(p.com[k] || "Sin valoración registrada.")}</div>`; }).join("");
+  const n24 = p.nivel_2024 && p.nivel_2024 !== "No reportó" ? (p.nivel_2024 === p.nivel ? "igual que en 2024" : `en 2024, ${p.nivel_2024.toLowerCase()}`) : "sin nivel reportado en 2024";
+  const m = p.meta;
+
+  const ops = [...new Set(ind.map(r => r.op).filter(Boolean))].sort();
+  if(fx.opAb === null) fx.opAb = ops[0] || "";
+  const filaInd = r => `<div class="ind-fila"><span class="cd">${esc(r.c)}</span>
+      <button data-ind="${esc(r.c)}">${esc(corta(r.nm, 110))}${r.esc ? ` <span title="Valores registrados en escalas distintas entre años" style="color:#8C7A10">⚑</span>` : ""}</button>
+      <span>${chispa(r.voS, r.leS)}</span>
+      <span class="vl">${val(r.vo, r.pa)}<small>meta ${val(r.le, r.pa)}</small></span>
+      <span class="marcas">${r.e !== 2 ? `<span style="color:${MEJ[r.e][2]}" title="${MEJ[r.e][1]} frente al año anterior">${MEJ[r.e][0]}</span>` : `<span style="color:${ND}" title="Sin dato">–</span>`} ${marcaMeta(r.av)}</span></div>`;
+  const mapa = ops.map(op => {
+    const de = ind.filter(r => r.op === op), ab = fx.opAb === op;
+    const fav = de.filter(r => r.e === 0).length, ev = de.filter(r => r.e !== 2).length;
+    let cuerpo = "";
+    if(ab){
+      const iop = de.filter(r => r.t === 0);
+      if(iop.length) cuerpo += `<div class="serv"><div class="sv-tit">Indicadores del objetivo</div>${iop.map(filaInd).join("")}</div>`;
+      [...new Set(de.filter(r => r.t === 1).map(r => r.sv))].forEach(sv => {
+        cuerpo += `<div class="serv"><div class="sv-tit">${esc(sv)} <span>${esc(CAT[p.n]?.[sv] || "")}</span></div>${de.filter(r => r.t === 1 && r.sv === sv).map(filaInd).join("")}</div>`; });
+    }
+    return `<div class="mapa-op"><button aria-expanded="${ab}" data-op="${esc(op)}"><span><b>${esc(op)}</b> <span class="n">${esc(CAT[p.n]?.[op] || "")}</span></span>
+      <span class="res-op">${fav} de ${ev} mejoraron · ${plural(de.length,"indicador","indicadores")}</span><span class="chev">›</span></button>${cuerpo}</div>`;
+  }).join("");
+
+  $("#ficha").innerHTML = `
+  <section style="padding-bottom:10px"><div class="env">
+    <div class="ficha-cab">
+      <div><p class="ante">${esc(p.etiqueta)} · ${esc(p.ministerio)} · puesto ${p.puesto} de 42</p><h1>${esc(p.nombre)}</h1></div>
+      <div class="medallon" style="background:${colI(p.ispn)}"><div class="cifra">${nf(p.ispn)}</div><div class="c">ISPN sobre 100 · situación ${p.situacion.toLowerCase()}</div></div>
+    </div>
+    <div class="desliza movil"><svg id="gPosicion" viewBox="0 0 1200 64" role="img" aria-label="Posición de la política entre las 42"></svg></div>
+    <div class="datos">
+      <div><b>${esc(p.tipo)}</b>tipo de política</div>
+      <div><b>${p.aprobacion ?? "—"}</b>aprobada${p.anios != null ? ` · ${plural(p.anios,"año","años")} de vigencia` : ""}</div>
+      <div><b>${esc(p.nivel)}</b>nivel que reportó · ${esc(n24)}</div>
+      <div><b>${p.n_op} objetivos · ${p.n_serv} servicios</b>${plural(p.n_ind,"indicador","indicadores")}</div>
+      <div><b>${p.pct_meta != null ? pct(p.pct_meta,0) : "—"}</b>de sus indicadores con meta alcanzó la meta 2025</div>
+    </div>
+    <div class="acciones">
+      <button class="boton" data-ir="indicadores">Ver sus ${ent(p.n_ind)} indicadores</button>
+      <button class="boton sec" data-ir="reportes">Leer el reporte de cumplimiento</button>
+      <button class="boton sec" id="copiar">Copiar enlace a esta ficha</button>
+    </div>
+  </div></section>
+
+  <section class="franja" style="padding-top:36px"><div class="env"><div class="rej c21">
+    <div>
+      <h2 style="margin-bottom:16px">Situación de la política</h2>
+      <p class="texto-sit">${esc(p.texto)}</p>
+      ${p.problema ? `<details class="pleg"><summary>Problema público que atiende</summary><p>${esc(p.problema)}</p></details>` : ""}
+      ${p.sfd ? `<details class="pleg"><summary>Situación futura deseada</summary><p>${esc(p.sfd)}</p></details>` : ""}
+    </div>
+    <div>
+      <h3 style="margin-bottom:12px">Requieren atención</h3>
+      <p class="mini" style="margin-bottom:12px">Indicadores que retrocedieron frente al año anterior y no alcanzaron su meta 2025.</p>
+      ${atn.length ? `<ul class="atencion lista-s" style="list-style:none">${atn.slice(0,6).map(r => `<li><b>${esc(r.c)}</b> ${esc(corta(r.nm,95))}<br><span class="mini">${val(r.vo, r.pa)} frente a una meta de ${val(r.le, r.pa)} · avance ${pct(r.av,0)}</span></li>`).join("")}</ul>
+        ${atn.length > 6 ? `<button class="enlace" data-ir="indicadores" data-filtro="atencion">Ver los ${atn.length} indicadores</button>` : ""}`
+        : `<p class="mini">Ningún indicador está en esa situación.</p>`}
+      <h3 style="margin:26px 0 10px">Mejora y meta</h3>
+      <div class="mini">${m.mejora_alcanza} mejoran y cumplen · ${m.mejora_no_alcanza} mejoran sin cumplir · ${m.retrocede_alcanza} cumplen sin mejorar · ${m.retrocede_no_alcanza} ni mejoran ni cumplen</div>
+    </div>
+  </div></div></section>
+
+  <section class="franja gris"><div class="env"><div class="rej c21">
+    <div class="perfil">
+      <h2>Resultado por criterio</h2>
+      <p class="mini" style="margin:8px 0 14px">La marca azul indica el promedio de las 42 políticas. Despliega un criterio para leer su valoración.</p>
+      ${perfil}
+    </div>
+    <div class="simu" id="simu"></div>
+  </div></div></section>
+
+  <section class="franja"><div class="env">
+    <div class="titular"><h2>Mapa de la política</h2><p>Objetivos prioritarios, servicios e indicadores, con su serie 2019–2025: la línea es el valor obtenido y los círculos verdes, las metas.</p></div>
+    <div class="leyenda" style="margin:-8px 0 14px"><span><b style="color:#6E8A12">▲</b> Mejoró frente al año anterior</span><span><b style="color:#B04A15">▼</b> Retrocedió</span><span style="color:#1C7F14">● Alcanzó su meta</span><span style="color:#7A6A0E"><svg width="22" height="8" aria-hidden="true" style="vertical-align:0"><rect width="22" height="8" fill="#E6E9EE"/><rect width="12" height="8" fill="#B09A15"/></svg> Avance hacia la meta</span></div>
+    <div id="mapa">${mapa || `<p class="mini">La política no tiene indicadores registrados.</p>`}</div>
+  </div></section>
+
+  ${p.destacados.length || p.dificultades.length ? `<section class="franja gris"><div class="env"><div class="rej c2">
+    <div><h3>Servicios destacados en el reporte</h3><ul class="lista-s">${p.destacados.map(s=>`<li>${esc(s)}</li>`).join("") || "<li>No se identificaron.</li>"}</ul></div>
+    <div><h3>Servicios con dificultades</h3><ul class="lista-s">${p.dificultades.map(s=>`<li>${esc(s)}</li>`).join("") || "<li>No se identificaron.</li>"}</ul></div>
+  </div></div></section>` : ""}`;
+
+  const W = 1200, x = v => 16 + (W-32)*v/100;
+  let h = `<line x1="16" y1="30" x2="${W-16}" y2="30" stroke="#D5D9E0" stroke-width="2"/>`;
+  [40,60,80].forEach(v => h += `<line x1="${x(v)}" y1="22" x2="${x(v)}" y2="38" stroke="#B9C0CB"/>${Math.abs(v - R.promedio) < 6 ? "" : `<text class="eje" x="${x(v)}" y="54" text-anchor="middle">${v}</text>`}`);
+  P.forEach(q => { if(q !== p) h += `<circle cx="${x(q.ispn)}" cy="30" r="4.5" fill="#C9CED6" opacity=".9"/>`; });
+  h += `<line x1="${x(R.promedio)}" y1="22" x2="${x(R.promedio)}" y2="40" stroke="${AZUL}" stroke-width="2"/><text class="eje" x="${x(R.promedio)}" y="54" text-anchor="middle">promedio ${nf(R.promedio)}</text>
+    <circle cx="${x(p.ispn)}" cy="30" r="9" fill="${colI(p.ispn)}" stroke="#fff" stroke-width="2"/><text x="${x(p.ispn)}" y="12" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1D2330">${esc(p.etiqueta)}</text>`;
+  $("#gPosicion").innerHTML = h;
+
+  simulador();
+
+  $("#ficha").querySelectorAll(".perfil .fila").forEach(b => b.addEventListener("click", () => {
+    const k = b.dataset.c, ab = b.getAttribute("aria-expanded") !== "true";
+    ab ? fx.abiertos.add(k) : fx.abiertos.delete(k);
+    b.setAttribute("aria-expanded", ab); b.nextElementSibling.classList.toggle("oculto", !ab); }));
+  $("#ficha").querySelectorAll(".mapa-op > button").forEach(b => b.addEventListener("click", () => {
+    fx.opAb = fx.opAb === b.dataset.op ? "" : b.dataset.op; const y = window.scrollY; ficha(); window.scrollTo(0, y); }));
+  $("#ficha").querySelectorAll("[data-ind]").forEach(b => b.addEventListener("click", () => {
+    fi.alcance = "activa"; fi.abierto = p.n + "|" + b.dataset.ind; fi.q = b.dataset.ind; fi.pendiente = "uno"; ir("indicadores"); }));
+  $("#ficha").querySelectorAll("[data-ir]").forEach(b => b.addEventListener("click", () => { if(b.dataset.filtro === "atencion") fi.pendiente = "atencion"; ir(b.dataset.ir); }));
+  $("#copiar").addEventListener("click", e => {
+    const url = location.href.split("#")[0] + "#/ficha/" + encodeURIComponent(p.etiqueta);
+    const ok = () => { e.target.textContent = "Enlace copiado"; setTimeout(() => e.target.textContent = "Copiar enlace a esta ficha", 1800); };
+    const manual = () => { try { prompt("Copia este enlace:", url); } catch(_) {} };
+    try { navigator.clipboard.writeText(url).then(ok, manual); } catch(_) { manual(); }
+  });
+}
+
+function simulador(){
+  const p = porEtq[st.pol], s = fx.sim, v = ispnDe(s), sit = sitDe(v);
+  const sig = v < 40 ? 40 : v < 60 ? 60 : v < 80 ? 80 : null;
+  const falta = sig ? sig - v : 0, escalones = Math.ceil(falta / (100/24) - 1e-9);
+  const cambios = s.some((c,i) => c !== p.criterios[i]);
+  $("#simu").innerHTML = `<h3>Ruta a la siguiente franja</h3>
+    <p class="mini" style="margin:6px 0 12px">Sube o baja cada criterio para ver cómo cambiaría el índice. Es una simulación ilustrativa.</p>
+    ${CR.map((c,i) => `<div class="simu-fila"><span>${esc(c.nombre)}</span><span class="paso">
+      <button type="button" data-i="${i}" data-d="-1" aria-label="Bajar ${esc(c.nombre)}" ${s[i] <= 1 ? "disabled" : ""}>−</button>
+      <span class="${s[i] !== p.criterios[i] ? "cambio" : ""}">${s[i]} / ${MAX[i]}</span>
+      <button type="button" data-i="${i}" data-d="1" aria-label="Subir ${esc(c.nombre)}" ${s[i] >= MAX[i] ? "disabled" : ""}>+</button></span></div>`).join("")}
+    <div class="res"><span class="cifra">${nf(v)}</span><span class="franja-txt">situación ${sit.toLowerCase()}${cambios ? ` · ${v >= p.ispn ? "+" : ""}${nf(v - p.ispn)} frente al actual` : ""}</span></div>
+    <p class="franja-txt" style="margin:0">${sig ? `Faltan <b>${nf(falta)}</b> puntos para la situación ${sitDe(sig).toLowerCase()}: equivale a subir ${plural(escalones,"escalón","escalones")} en los criterios 1 a 5, o la mitad en alternativas de mejora.` : "Alcanza la franja más alta."}</p>
+    ${cambios ? `<button class="enlace" style="color:#9FE6EF" type="button" id="simReset">Volver a los puntajes reales</button>` : ""}`;
+  $("#simu").querySelectorAll(".paso button").forEach(b => b.addEventListener("click", () => {
+    const i = +b.dataset.i, d = b.dataset.d; s[i] = Math.max(1, Math.min(MAX[i], s[i] + (+d))); simulador();
+    const nb = $(`#simu .paso button[data-i="${i}"][data-d="${d}"]`); if(nb && !nb.disabled) nb.focus(); }));
+  $("#simReset")?.addEventListener("click", () => { fx.sim = [...p.criterios]; simulador(); });
+}
+
+/* ================================================================ INDICADORES */
+const fi = { alcance:"activa", op:"", tipos:new Set(["0","1"]), mej:new Set(["0","1","2"]), meta:new Set(["si","no","nd"]), est:"", q:"", lim:40, abierto:null, pendiente:null, polPrev:null };
+const segs = {};
+function indicadores(){
+  if(!hecho.ind){
+    hecho.ind = true;
+    segs.alc = segmento($("#segAlc"), [["activa","Política activa"],["todas","Las 42 políticas"]], fi.alcance, v => { fi.alcance = v; fi.op = ""; fi.lim = 40; tablaInd(); });
+    segs.tipo = segmento($("#segTipo"), [["0","Objetivo"],["1","Servicio"]], fi.tipos, () => { fi.lim = 40; tablaInd(); });
+    segs.mej = segmento($("#segMej"), [["0","Mejoró"],["1","Retrocedió"],["2","Sin dato"]], fi.mej, () => { fi.lim = 40; tablaInd(); });
+    segs.meta = segmento($("#segMeta"), [["si","Alcanzada"],["no","No alcanzada"],["nd","Sin meta"]], fi.meta, () => { fi.lim = 40; tablaInd(); });
+    const ests = [...new Set(IND.map(r => r.es).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"es"));
+    $("#selEst").innerHTML = `<option value="">Todos</option>` + ests.map(e => `<option>${esc(e)}</option>`).join("");
+    $("#selEst").addEventListener("change", e => { fi.est = e.target.value; fi.lim = 40; tablaInd(); });
+    $("#selOP").addEventListener("change", e => { fi.op = e.target.value; fi.lim = 40; tablaInd(); });
+    $("#buscaInd").addEventListener("input", e => { fi.q = e.target.value.trim(); fi.lim = 40; tablaInd(); });
+    $("#masInd").addEventListener("click", () => { fi.lim += 40; tablaInd(); });
+    $("#limpiaInd").addEventListener("click", () => limpiarInd(true));
+    $("#csvInd").addEventListener("click", csv);
+  }
+  if(fi.polPrev !== st.pol && !fi.pendiente){ fi.op = ""; }
+  fi.polPrev = st.pol;
+  segs.alc.reiniciar(fi.alcance);
+  if(fi.pendiente === "atencion"){ limpiarInd(false); fi.alcance = "activa"; segs.alc.reiniciar("activa"); segs.mej.reiniciar(["1"]); segs.meta.reiniciar(["no"]); }
+  if(fi.pendiente === "uno"){ const q = fi.q, ab = fi.abierto; limpiarInd(false); fi.q = q; fi.abierto = ab; }
+  fi.pendiente = null;
+  $("#buscaInd").value = fi.q;
+  tablaInd();
+}
+function limpiarInd(pintar){
+  fi.op = ""; fi.q = ""; fi.est = ""; fi.lim = 40; $("#buscaInd").value = ""; $("#selEst").value = "";
+  segs.tipo.reiniciar(["0","1"]); segs.mej.reiniciar(["0","1","2"]); segs.meta.reiniciar(["si","no","nd"]);
+  if(pintar) tablaInd();
+}
+const claseMeta = r => r.av == null ? "nd" : r.av >= 100 ? "si" : "no";
+function filtrados(){
+  const n = porEtq[st.pol].n, q = fi.q.toLowerCase();
+  return IND.filter(r => (fi.alcance === "todas" || r.n === n) && (!fi.op || r.op === fi.op) &&
+    fi.tipos.has(String(r.t)) && fi.mej.has(String(r.e)) && fi.meta.has(claseMeta(r)) && (!fi.est || r.es === fi.est) &&
+    (!q || (r.c + " " + r.nm).toLowerCase().includes(q)));
+}
+function tablaInd(){
+  const p = porEtq[st.pol];
+  $("#antInd").textContent = fi.alcance === "activa" ? `${p.etiqueta} · ${p.nombre}` : "Las 42 políticas nacionales";
+  $("#campoOP").classList.toggle("oculto", fi.alcance !== "activa");
+  if(fi.alcance === "activa"){
+    const ops = [...new Set(IND.filter(r => r.n === p.n && r.op).map(r => r.op))].sort();
+    $("#selOP").innerHTML = `<option value="">Todos (${ops.length})</option>` + ops.map(o => `<option value="${esc(o)}" ${fi.op===o?"selected":""}>${esc(o)} · ${esc(corta(CAT[p.n]?.[o] || "", 60))}</option>`).join("");
+  }
+  const f = filtrados(), ev = f.filter(r => r.e !== 2), cm = f.filter(r => r.av != null);
+  $("#resumenInd").innerHTML = [
+    [ent(f.length), "indicadores en la selección"],
+    [ev.length ? pct(100*ev.filter(r=>r.e===0).length/ev.length,0) : "—", `mejoraron, de ${ent(ev.length)} con comparación`],
+    [cm.length ? pct(100*cm.filter(r=>r.av>=100).length/cm.length,0) : "—", `alcanzaron su meta, de ${ent(cm.length)} con meta`],
+    [ent(f.filter(r=>r.e===2).length), "sin dato para comparar"],
+  ].map(([v,n]) => `<div><div class="cifra">${v}</div><div class="n">${n}</div></div>`).join("");
+  $("#contInd").innerHTML = f.length ? `Mostrando <b>${ent(Math.min(f.length, fi.lim))}</b> de ${ent(f.length)}` : "";
+  const todas = fi.alcance === "todas";
+  let h = `<thead><tr><th>Código</th><th>Indicador</th><th>Serie 2019–2025</th><th class="num">Valor 2025</th><th class="num">Meta 2025</th><th>Avance hacia la meta</th><th>Frente a 2024</th></tr></thead><tbody>`;
+  if(!f.length) h += `<tr><td colspan="7" style="padding:28px; text-align:center; color:var(--suave)">Ningún indicador cumple todos los filtros. Quita alguno para ampliar la búsqueda.</td></tr>`;
+  f.slice(0, fi.lim).forEach(r => {
+    const k = r.n + "|" + r.c, ab = fi.abierto === k, q = porN[r.n];
+    const barra = r.av == null ? `<span class="mini">sin meta</span>` : `<span class="barra-meta"><i><b style="width:${Math.min(100,r.av)}%; background:${r.av >= 100 ? "#1DB015" : r.av >= 50 ? "#B09A15" : "#B04A15"}"></b></i>${nf(r.av,0)} %</span>`;
+    h += `<tr class="fi ${ab ? "ab" : ""}" data-k="${esc(k)}" tabindex="0" aria-expanded="${ab}">
+      <td class="cd">${esc(r.c)}${todas ? `<span class="pl">${esc(q.etiqueta)}</span>` : ""}</td>
+      <td class="nm">${esc(r.nm)}${r.esc ? ` <span title="Valores registrados en escalas distintas entre años" style="color:#8C7A10">⚑</span>` : ""}</td>
+      <td>${chispa(r.voS, r.leS)}</td><td class="num"><b>${val(r.vo, r.pa)}</b></td><td class="num">${val(r.le, r.pa)}</td>
+      <td>${barra}</td><td>${marcaMejora(r.e)}</td></tr>`;
+    if(ab){
+      h += `<tr class="det"><td colspan="7"><div class="det-grid"><div>
+        <div class="meta-i">
+          <div><b>${esc(r.op)}</b>${esc(CAT[r.n]?.[r.op] || "")}</div>
+          ${r.sv ? `<div><b>${esc(r.sv)}</b>${esc(CAT[r.n]?.[r.sv] || "")}</div>` : `<div><b>Indicador de objetivo prioritario</b>${esc(q.nombre)}</div>`}
+          <div><b>Sentido esperado</b>${esc(r.se || "—")}</div>
+          <div><b>Unidad</b>${esc(r.pa || "—")}</div>
+          ${r.ti ? `<div><b>Tipo de indicador</b>${esc(r.ti)}${r.es ? ` · ${esc(r.es.toLowerCase())}` : ""}</div>` : ""}
+          <div><b>Responsable</b>${esc(r.rs || "—")}</div>
+          <div><b>Línea de base</b>${val(r.lb, r.pa)}${r.lbA ? ` (${r.lbA})` : ""}</div>
+          ${r.ref ? `<div><b>Comparado con</b>${esc(r.ref)}</div>` : ""}
+        </div>
+        ${r.co ? `<div class="comentario"><b style="display:block; font-size:.8rem; color:var(--suave); font-weight:600">Comentario de la entidad</b>${esc(r.co)}</div>` : ""}
+        ${r.esc ? `<div class="aviso">Los valores de este indicador se registraron en escalas distintas entre años (como proporción y como porcentaje). Se muestran tal como fueron reportados.</div>` : ""}
+      </div><div class="desliza"><table class="serie"><thead><tr><th></th>${ANIOS.map(a=>`<th>${a}</th>`).join("")}</tr></thead><tbody>
+        <tr><td>Valor obtenido</td>${ANIOS.map((a,j)=>`<td>${val((r.voS||[])[j])}</td>`).join("")}</tr>
+        <tr><td>Meta</td>${ANIOS.map((a,j)=>`<td>${val((r.leS||[])[j])}</td>`).join("")}</tr></tbody></table>
+        <div style="margin-top:14px">${chispa(r.voS, r.leS, 420, 90)}</div></div></div></td></tr>`;
+    }
+  });
+  $("#tablaInd").innerHTML = h + "</tbody>";
+  const resto = f.length - fi.lim;
+  $("#masInd").classList.toggle("oculto", resto <= 0);
+  $("#masInd").textContent = `Mostrar ${Math.min(40, resto)} más · quedan ${ent(resto)}`;
+  $("#tablaInd").querySelectorAll("tr.fi").forEach(tr => activable(tr, () => { fi.abierto = fi.abierto === tr.dataset.k ? null : tr.dataset.k; tablaInd(); }));
+}
+function csv(){
+  const f = filtrados(), q = v => { const s = v == null ? "" : String(v); return /[",;\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s; };
+  const cab = ["politica","sigla","codigo","indicador","tipo","objetivo_prioritario","lineamiento","servicio","sentido","unidad","tipo_indicador","estandar",
+    "responsable","linea_base","anio_linea_base","valor_2024","valor_2025","meta_2025","avance_meta_pct","frente_a_2024",...ANIOS.map(a=>"valor_"+a),...ANIOS.map(a=>"meta_"+a),"comentario_entidad"];
+  const filas = f.map(r => { const p = porN[r.n];
+    return [p.nombre,p.etiqueta,r.c,r.nm,r.t?"Servicio":"Objetivo prioritario",r.op,r.ln,r.sv,r.se,r.pa,r.ti,r.es,r.rs,r.lb,r.lbA,r.vp,r.vo,r.le,r.av,MEJ[r.e][1],
+      ...ANIOS.map((a,j)=>(r.voS||[])[j]),...ANIOS.map((a,j)=>(r.leS||[])[j]),r.co].map(q).join(","); });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob(["﻿" + cab.join(",") + "\n" + filas.join("\n")], {type:"text/csv;charset=utf-8"}));
+  a.download = `indicadores_ispn_2025_${fi.alcance === "todas" ? "todas" : st.pol}.csv`;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+
+/* ================================================================ REPORTES */
+const rcCache = {}, rc = { q:"", pol:null, completo:false };
+function cargarRC(p){
+  if(rcCache[p.rc]) return Promise.resolve(rcCache[p.rc]);
+  if(window.RC_TODO && window.RC_TODO[p.rc]) return Promise.resolve(rcCache[p.rc] = window.RC_TODO[p.rc]);
+  return fetch("data/rc/" + p.rc).then(r => { if(!r.ok) throw new Error(r.status); return r.json(); }).then(d => rcCache[p.rc] = d);
+}
+function reportes(){
+  if(!hecho.rc){ hecho.rc = true; let t;
+    $("#buscaRC").addEventListener("input", e => { clearTimeout(t); t = setTimeout(() => { rc.q = e.target.value.trim(); cuerpoRC(); }, 200); }); }
+  const p = porEtq[st.pol];
+  if(rc.pol !== st.pol){ rc.pol = st.pol; rc.completo = false; }
+  $("#cabRC").innerHTML = `<p class="ante">${esc(p.etiqueta)} · ${esc(p.ministerio)}</p><h2>Reporte de cumplimiento 2025</h2>
+    <p>${esc(p.nombre)}. Texto remitido por la entidad. Donde el documento original tenía un gráfico o una tabla se indica con un recuadro; sus datos están en la pestaña de indicadores.</p>`;
+  $("#cuerpoRC").innerHTML = `<p class="cargando">Cargando el reporte…</p>`; $("#indiceRC").innerHTML = "";
+  cargarRC(p).then(cuerpoRC).catch(() => { $("#cuerpoRC").innerHTML = `<p class="cargando">No se pudo cargar el reporte. Si abriste la versión del repositorio como archivo local, usa la versión autocontenida o publícala en un servidor.</p>`; });
+}
+function bloquesHTML(bl, q, op){
+  const re = q ? new RegExp("(" + q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi") : null;
+  const mk = s => { const h = esc(s); return re ? h.replace(re, "<mark>$1</mark>") : h; };
+  let h = "", ul = false;
+  const notas = [], cierraUl = () => { if(ul){ h += "</ul>"; ul = false; } };
+  bl.forEach(([t, x], i) => {
+    if(t === "li"){ if(!ul){ h += "<ul>"; ul = true; } h += `<li>${mk(x)}</li>`; return; }
+    cierraUl();
+    if(t === "p") h += `<p>${mk(x)}</p>`;
+    else if(t === "h"){ if(!/^(OP|OE)\.?\s?\d+\.?$/.test(x.trim())) h += `<h4>${mk(x)}</h4>`; }
+    else if(t === "fig"){
+      const src = bl[i+1] && bl[i+1][0] === "src" ? bl[i+1][1] : "";
+      const tabla = x.startsWith("Tabla del documento");
+      h += `<div class="hueco" role="note"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" fill="none" stroke="#7C8494" stroke-width="1.5"/><path d="M6 16l4-5 3 3 2-2 3 4" fill="none" stroke="#7C8494" stroke-width="1.5"/></svg>
+        <div><b>${tabla ? "Aquí el reporte original incluía una tabla" : "Aquí el reporte original incluía: " + esc(x)}</b>
+        <span>No se conserva en la versión de texto.</span>${src ? `<div class="src">${esc(src)}</div>` : ""}
+        <button class="enlace" data-ver-op="${esc(op)}">${op ? `Ver los indicadores de ${esc(op)}` : "Ver los indicadores de la política"}</button></div></div>`;
+    }
+    else if(t === "src"){ if(!(bl[i-1] && bl[i-1][0] === "fig")) h += `<p class="mini">${mk(x)}</p>`; }
+    else if(t === "nota") notas.push(x);
+  });
+  cierraUl();
+  if(notas.length) h += `<div class="notas"><b>Notas al pie</b>${notas.map(n => `<p>${mk(n)}</p>`).join("")}</div>`;
+  return h || `<p class="mini">La entidad no consignó información en esta sección.</p>`;
+}
+function cuenta(bl, q){ if(!q) return 0; const l = q.toLowerCase(); return bl.reduce((a,[,x]) => a + (x.toLowerCase().split(l).length - 1), 0); }
+function cuerpoRC(){
+  const p = porEtq[st.pol], d = rcCache[p.rc]; if(!d) return;
+  const q = rc.q, nRes = cuenta(d.resumen, q), nAlt = cuenta(d.alternativas, q);
+  const largo = d.resumen.reduce((a,[,x]) => a + x.length, 0) > 3500;
+  let total = nRes + nAlt, idx = `<a href="#rc-resumen">Resumen del reporte${q && nRes ? `<small>${nRes} coincidencias</small>` : ""}</a>`;
+  let cuerpo = `<section id="rc-resumen"><h2>Resumen del reporte</h2>
+    <div class="${largo && !rc.completo && !q ? "recorte" : ""}">${bloquesHTML(d.resumen, q, "")}</div>
+    ${largo && !q ? `<button class="boton sec" id="verRes" type="button" style="margin-top:12px">${rc.completo ? "Mostrar menos" : "Leer el resumen completo"}</button>` : ""}</section>`;
+  d.ops.forEach((o, i) => {
+    const n = cuenta(o.cumplimiento, q) + cuenta(o.actividades, q); total += n;
+    idx += `<a href="#rc-op-${i}">${esc(o.cod)}<small>${esc(corta(o.nombre, 60))}${q && n ? ` · ${n} coincidencias` : ""}</small></a>`;
+    cuerpo += `<section id="rc-op-${i}"><h2>${esc(o.cod)}</h2><p class="op-nom">${esc(o.nombre)}</p>
+      <h3>I. Cumplimiento del objetivo prioritario</h3>${bloquesHTML(o.cumplimiento, q, o.cod)}
+      <h3>II. Actividades y recursos</h3>${bloquesHTML(o.actividades, q, o.cod)}</section>`;
+  });
+  idx += `<a href="#rc-alt">Alternativas de mejora${q && nAlt ? `<small>${nAlt} coincidencias</small>` : ""}</a>`;
+  cuerpo += `<section id="rc-alt"><h2>III. Alternativas para mejorar la implementación</h2>${bloquesHTML(d.alternativas, q, "")}</section>`;
+  $("#indiceRC").innerHTML = idx; $("#cuerpoRC").innerHTML = cuerpo;
+  $("#contRC").textContent = q ? `${total} coincidencias de “${q}”` : `${d.ops.length} objetivos prioritarios`;
+  $("#indiceRC").querySelectorAll("a").forEach(a => a.addEventListener("click", e => { e.preventDefault(); document.getElementById(a.getAttribute("href").slice(1))?.scrollIntoView({behavior:"smooth", block:"start"}); }));
+  $("#verRes")?.addEventListener("click", () => { rc.completo = !rc.completo; cuerpoRC(); if(!rc.completo) $("#rc-resumen").scrollIntoView(); });
+  $("#cuerpoRC").querySelectorAll("[data-ver-op]").forEach(b => b.addEventListener("click", () => {
+    fi.alcance = "activa"; fi.pendiente = "op"; fi.op = b.dataset.verOp; ir("indicadores"); }));
+}
+
+/* ================================================================ METODOLOGÍA */
+function metodologia(){
+  if(hecho.met) return; hecho.met = true;
+  $("#franjasMet").innerHTML = `<div class="leyenda" style="font-size:.92rem">${[["Baja","menos de 40"],["Media","40 a 59.9"],["Media-alta","60 a 79.9"],["Alta","80 a 100"]].map(([n,r]) => `<span><i style="background:${SIT[n]}"></i><b>${n}</b>&nbsp;${r}</span>`).join("")}</div>`;
+  let dim = "", h = "";
+  CR.forEach(c => { if(c.dimension !== dim){ dim = c.dimension; h += `<h3 style="margin:${h ? 20 : 0}px 0 8px">${esc(dim)}</h3>`; }
+    h += `<p style="margin:0 0 8px"><b>${c.c} · ${esc(c.nombre)}.</b> ${esc(c.descripcion)} Escala de 1 a ${c.maximo}; promedio 2025: ${nf(c.promedio,2)}.</p>`; });
+  $("#dimMet").innerHTML = h;
+  const rg = ["0 a 24.99 %","25 a 49.99 %","50 a 74.99 %","75 a 99.99 %","100 %"];
+  $("#tablaRub").innerHTML = `<thead><tr><th>Puntaje</th><th>C2 · Indicadores de objetivos que mejoran</th><th>C3 · Servicios implementados</th><th>C4 · Indicadores de servicios que mejoran</th><th>C5 · Indicadores con información</th></tr></thead><tbody>` +
+    rg.map((r,i) => `<tr><td><span class="pild" style="background:${PAL5[i]}">${i+1}</span></td>${[0,1,2,3].map(() => `<td>${r}</td>`).join("")}</tr>`).join("") + "</tbody>";
+  $("#calidadMet").innerHTML = `<li>${ent(R.ind_nd)} de ${ent(R.indicadores)} indicadores no tienen dato para compararse con el año anterior.</li>
+    <li>${ent(R.escala_inconsistente)} indicadores registran valores en escalas distintas entre años (proporción y porcentaje); se señalan con ⚑ y se muestran tal como fueron reportados.</li>
+    <li>Los textos de los reportes provienen de documentos Word: los gráficos y tablas originales no se conservan y se indican con un recuadro.</li>`;
+}
+
+/* ================================================================ arranque */
+$$("#pestanas [role=tab]").forEach(b => b.addEventListener("click", () => ir(b.dataset.v)));
+$("#pestanas").addEventListener("keydown", e => {
+  if(!["ArrowRight","ArrowLeft"].includes(e.key)) return;
+  const j = (VISTAS.indexOf(st.vista) + (e.key === "ArrowRight" ? 1 : -1) + VISTAS.length) % VISTAS.length;
+  ir(VISTAS[j]); $(`#pestanas [data-v="${VISTAS[j]}"]`).focus();
+});
+window.addEventListener("hashchange", () => { leerHash(); mostrar(); });
+leerHash(); escribirHash(); mostrar();
+})();
+</script>
+</body>
+</html>

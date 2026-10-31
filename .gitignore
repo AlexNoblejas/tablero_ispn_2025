@@ -1,0 +1,19 @@
+# archivos de origen: quedan fuera del repositorio (ver datos/LEEME.md)
+/fuentes/
+datos/originales/
+
+# generados
+__pycache__/
+dist/
+web/rc_todo.json
+reel/salidas_prueba/
+reel/salidas/*.wav
+
+# la grabación de referencia de la voz no se publica
+reel/mi_voz.*
+
+.venv/
+.env
+.env.*
+*.log
+reel/salidas/cache/

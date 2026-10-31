@@ -1,0 +1,17 @@
+Ninguna de las 42 políticas nacionales evaluadas alcanza una situación alta. ¿Qué nos dice eso sobre su implementación?
+
+Convertí los resultados del Informe Anual de Políticas Nacionales 2025 del CEPLAN en un tablero interactivo para explorar las 42 políticas, sus 2.480 indicadores y sus reportes de cumplimiento. Formé parte del equipo técnico de los informes correspondientes a 2024 y 2025.
+
+Tres resultados:
+• El promedio del índice es 40,1 sobre 100; el máximo, 70,8.
+• En 40 de 42 políticas, el reporte no permite acreditar una mejora del problema público. Esto no demuestra ausencia de impacto: también puede reflejar falta de información.
+• Solo 9 de 42 obtienen la máxima calificación en propuestas de mejora específicas y viables.
+
+El tablero permite comparar criterios, consultar series y descargar indicadores. El índice resume la evidencia reportada; no mide directamente el bienestar de la población ni permite atribuir efectos causales.
+
+Tablero: https://AlexNoblejas.github.io/tablero_ispn_2025/
+Código y datos: https://github.com/AlexNoblejas/tablero_ispn_2025
+
+Visualización independiente; ante cualquier diferencia prevalece el informe oficial. La voz del video fue generada con IA a partir de mi propia grabación. La música y los gráficos son originales del proyecto.
+
+#PolíticasPúblicas #DatosAbiertos #CienciaDeDatos #Perú #CEPLAN

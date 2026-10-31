@@ -1,0 +1,12 @@
+# Entorno del reel (aparte del tablero: qwen-tts fija transformers==4.57.3)
+qwen-tts
+faster-whisper
+pillow
+imageio-ffmpeg
+soundfile
+jiwer
+num2words
+numpy
+
+# solo para rehacer las capturas del tablero (hacer_capturas.py)
+# playwright

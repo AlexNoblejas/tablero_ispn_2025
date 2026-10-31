@@ -1,0 +1,71 @@
+{
+  "titulo": "Políticas nacionales 2025",
+  "escenas": [
+    {
+      "frase": "El Perú tiene cuarenta y dos políticas nacionales vigentes. Al cierre de dos mil veinticinco, ninguna alcanza una situación alta.",
+      "cifra": "0 de 42",
+      "etiqueta": "Políticas en situación alta",
+      "imagen": "e1_escala.png",
+      "cifra_en_texto": true,
+      "wer": 0.0
+    },
+    {
+      "frase": "El índice que las evalúa va de cero a cien y resume seis criterios. El promedio del conjunto es cuarenta punto uno.",
+      "cifra": "40.1",
+      "etiqueta": "Promedio del índice, sobre 100",
+      "imagen": "e2_criterios.png",
+      "cifra_en_texto": true,
+      "wer": 0.09090909090909091
+    },
+    {
+      "frase": "En cuarenta de las cuarenta y dos, el problema público que originó la política no muestra una mejora que el reporte permita acreditar.",
+      "cifra": "40 de 42",
+      "etiqueta": "Sin mejora acreditable del problema público",
+      "imagen": "e3_problema.png",
+      "cifra_en_texto": true,
+      "wer": 0.0
+    },
+    {
+      "frase": "Entregar los servicios es necesario, pero no suficiente. De veintiséis políticas con la mayoría en marcha, solo quince muestran resultados favorables.",
+      "cifra": "15 de 26",
+      "etiqueta": "Implementan y muestran resultados",
+      "imagen": "e4_cuadrante.png",
+      "cifra_en_texto": true,
+      "wer": 0.0
+    },
+    {
+      "frase": "Al proponer cómo corregir el rumbo, solo nueve de las cuarenta y dos plantean alternativas específicas; el resto repite o se queda en lo general.",
+      "cifra": "9 de 42",
+      "etiqueta": "Proponen mejoras específicas y viables",
+      "imagen": "e5_alternativas.png",
+      "cifra_en_texto": true,
+      "wer": 0.0
+    },
+    {
+      "frase": "Construí un tablero público para recorrer las cuarenta y dos políticas, sus dos mil cuatrocientos ochenta indicadores y sus reportes.",
+      "cifra": "2,480",
+      "etiqueta": "Explora el tablero: enlace en mi perfil",
+      "imagen": "e6_tablero.png",
+      "cifra_en_texto": true,
+      "wer": 0.05
+    }
+  ],
+  "hashtags": [
+    "#PolíticasPúblicas",
+    "#DatosAbiertos",
+    "#CienciaDeDatos",
+    "#Perú",
+    "#CEPLAN"
+  ],
+  "posts": {
+    "linkedin": "Ninguna de las 42 políticas nacionales del Perú alcanza una situación alta. Pero el dato que más me hizo pensar no es ese.\n\nEn 2024 y 2025 integré el equipo técnico que elaboró el Informe Anual de Políticas Nacionales en el CEPLAN. Este año quise que sus resultados no se quedaran dentro del documento: construí un tablero público para recorrer, política por política, cómo está cada una de las 42, con sus 2,480 indicadores y sus reportes de cumplimiento.\n\nEl informe resume cada política en un índice de 0 a 100. El promedio es 40.1 y el máximo, 70.8. Vale leerlo con cuidado: el índice no mide el bienestar de la población, sino lo que el reporte de cada política permite acreditar, así que un puntaje bajo muchas veces señala información que falta más que una política que no funcione.\n\nLa implementación es, de hecho, el criterio mejor evaluado de los seis: 3.4 sobre 5 en promedio. Los servicios se están entregando. Y aun así, en 40 de las 42 el reporte no permite acreditar que el problema público que les dio origen esté mejorando.\n\nLo que más me quedó dando vueltas es qué pasa en el paso siguiente. El informe también califica, de 1 a 3, las alternativas que cada entidad propone para mejorar su propia implementación. El nivel más alto exige medidas específicas y viables, donde se identifique quién hace qué. Solo 9 de las 42 llegan ahí. 21 se quedan en medidas generales, sin precisar acciones ni mecanismos, y 12 en el nivel más bajo: sin alternativas, con ajustes de diseño, o reiterando medidas del año anterior sin informar avances. El diagnóstico se hace todos los años; la respuesta todavía no se traduce en acciones concretas.\n\nHay bastante más que mirar política por política, y preferí dejarlo en el tablero antes que resumirlo acá. Les dejo el enlace, el del repositorio con el código y los datos procesados, y el del informe completo del CEPLAN en el primer comentario.\n\nEs una visualización independiente: ante cualquier diferencia prevalece el informe publicado. La voz del video fue generada con IA a partir de mi propia voz.",
+    "x": "En 40 de las 42 políticas nacionales del Perú el reporte no acredita que el problema público mejore, aunque los servicios sí se implementan. Y solo 9 proponen mejoras específicas. Hice un tablero público. Voz del video generada con IA.",
+    "facebook": "¿Cómo están las 42 políticas nacionales del Perú? Fui parte del equipo técnico que elaboró el Informe Anual de Políticas Nacionales del CEPLAN en 2024 y 2025, y convertí los resultados de este año en un tablero público.\n\nLos servicios se están entregando: la implementación es el criterio mejor evaluado de los seis. Y aun así, en 40 de las 42 políticas el reporte no permite acreditar que el problema público esté mejorando. En el paso siguiente, el de proponer cómo corregir el rumbo, solo 9 de 42 plantean medidas específicas y viables: 21 se quedan en lo general y 12 no proponen nada nuevo o repiten lo del año anterior sin informar avances.\n\nEl tablero, el código y el informe completo están enlazados en el primer comentario. Es una visualización independiente; ante cualquier diferencia prevalece el informe publicado. La voz del video fue generada con IA a partir de mi propia voz."
+  },
+  "cifras_dudosas_en_posts": [],
+  "enlaces": {
+    "tablero": "https://AlexNoblejas.github.io/tablero_ispn_2025/",
+    "repositorio": "https://github.com/AlexNoblejas/tablero_ispn_2025",
+    "informe_ceplan": "https://www.minsa.gob.pe/Recursos/OTRANS/09GestionIns/informe/2026/Informe-Anual-de-Pol%C3%ADticas-Nacionales-2025.pdf"
+  }
+}
