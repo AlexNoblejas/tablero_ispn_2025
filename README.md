@@ -2,7 +2,7 @@
 
 Tarea 3 del curso Python Intermedio — Diplomatura en Ciencia de Datos (QLAB).
 
-**Dashboard:** [Abrir tablero](https://AlexNoblejas.github.io/tablero_ispn_2025/) · **LinkedIn:** pendiente de publicación
+**Dashboard:** [Abrir tablero](https://AlexNoblejas.github.io/tablero_ispn_2025/) · **LinkedIn:** [Ver publicación](https://lnkd.in/p/db3SuAuy)
 
 ## Tema y pregunta de investigación
 
@@ -211,4 +211,4 @@ diferencia prevalece el informe publicado.
 
 ## Estado de la entrega
 
-El tablero y el reel están terminados y verificados localmente. La publicación de LinkedIn y el comentario del issue están pendientes. El tablero se publica con GitHub Pages desde la rama `main`. El video final está en [reel/salidas/reel.mp4](reel/salidas/reel.mp4) y el borrador de LinkedIn en [publicacion_linkedin.txt](reel/salidas/publicacion_linkedin.txt).
+El tablero y el reel están terminados y verificados localmente. La publicación de LinkedIn está disponible en el enlace anterior. Queda pendiente el comentario de entrega en el issue del curso. El tablero se publica con GitHub Pages desde la rama `main`. El video final está en [reel/salidas/reel.mp4](reel/salidas/reel.mp4) y el borrador de LinkedIn en [publicacion_linkedin.txt](reel/salidas/publicacion_linkedin.txt).
