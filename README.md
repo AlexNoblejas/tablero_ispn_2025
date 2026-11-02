@@ -211,4 +211,4 @@ diferencia prevalece el informe publicado.
 
 ## Estado de la entrega
 
-El tablero y el reel están terminados y verificados localmente. La publicación de LinkedIn está disponible en el enlace anterior. Queda pendiente el comentario de entrega en el issue del curso. El tablero se publica con GitHub Pages desde la rama `main`. El video final está en [reel/salidas/reel.mp4](reel/salidas/reel.mp4) y el borrador de LinkedIn en [publicacion_linkedin.txt](reel/salidas/publicacion_linkedin.txt).
+El tablero y el reel están terminados y verificados localmente. La publicación de LinkedIn está disponible en el enlace anterior. La entrega está registrada en el [comentario del issue del curso](https://github.com/d2cml-ai/Data-Science-Python/issues/197#issuecomment-6566576823). El tablero se publica con GitHub Pages desde la rama `main`. El video final está en [reel/salidas/reel.mp4](reel/salidas/reel.mp4) y el borrador de LinkedIn en [publicacion_linkedin.txt](reel/salidas/publicacion_linkedin.txt).
